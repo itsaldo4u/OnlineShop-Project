@@ -1,4 +1,4 @@
-import AboutForm from "../componentes/about/AboutForm"; // Importoni komponentin e formës
+import AboutForm from "../componentes/about/AboutForm"; 
 
 const AboutPage = () => {
   return (

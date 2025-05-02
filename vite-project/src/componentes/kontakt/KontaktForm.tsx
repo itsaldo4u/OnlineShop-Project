@@ -1,225 +1,175 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./BasicContactPage.css";
 
-// Komponent për Inputin
-const InputField: React.FC<{
-  id: string;
-  type: string;
-  label: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}> = ({ id, type, label, value, onChange }) => (
-  <div className="form-floating mb-2">
-    <input
-      type={type}
-      className="form-control"
-      id={id}
-      placeholder={label}
-      value={value}
-      onChange={onChange}
-      style={{
-        padding: "8px",
-        borderRadius: "5px",
-        border: "1.5px solid #ccc",
-        transition: "all 0.3s ease",
-        fontSize: "0.9rem",
-      }}
-    />
-    <label htmlFor={id} style={{ fontSize: "0.85rem" }}>
-      {label}
-    </label>
-  </div>
-);
-
-const KontaktForm = () => {
+const BasicContactPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [comment, setComment] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
+  const [submissions, setSubmissions] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  // Fetch existing contact submissions when component mounts
+  useEffect(() => {
+    fetchSubmissions();
+  }, []);
 
-  const validateForm = () => {
-    if (!name || !email || !password || !comment) {
-      return "Të gjitha fushat janë të detyrueshme.";
+  const fetchSubmissions = async () => {
+    try {
+      const response = await axios.get("http://localhost:3001/contact");
+      setSubmissions(response.data);
+    } catch (err) {
+      console.error("Error fetching contact submissions:", err);
     }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      return "Ju lutem jepni një email të vlefshëm.";
-    }
-    return null;
   };
 
-  const handleSubmit = async () => {
-    const validationError = validateForm();
-    if (validationError) {
-      setErrorMessage(validationError);
-      return;
-    }
-
-    setSuccessMessage("");
-    setErrorMessage("");
-
-    const formData = { name, email, password, comment };
-    setIsLoading(true);
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/contact",
-        formData
-      );
-      setSuccessMessage("Mesazhi u dërgua me sukses!");
+      // Create new contact message object
+      const newContact = {
+        id: Date.now(),
+        name,
+        email,
+        message,
+        date: new Date().toISOString(),
+      };
+
+      // Post to JSON server
+      await axios.post("http://localhost:3000/contact", newContact);
+
+      // Update UI
+      setSuccess("Mesazhi u dërgua me sukses!");
       setName("");
       setEmail("");
-      setPassword("");
-      setComment("");
+      setMessage("");
+
+      // Refresh submissions list
+      fetchSubmissions();
     } catch (err) {
-      setErrorMessage("Ndodhi një gabim gjatë dërgimit të të dhënave.");
+      console.error("Error submitting form:", err);
+      setError("Ka ndodhur një gabim. Ju lutemi provoni përsëri.");
     } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="form-container" style={styles.container}>
-      <h2 style={styles.title}>Na Kontaktoni</h2>
-
-      {successMessage && (
-        <div className="alert alert-success" style={styles.successMessage}>
-          {successMessage}
-        </div>
-      )}
-      {errorMessage && (
-        <div className="alert alert-danger" style={styles.errorMessage}>
-          {errorMessage}
-        </div>
-      )}
-
-      <div className="form" style={styles.form}>
-        <InputField
-          id="floatingName"
-          type="text"
-          label="Emri"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <InputField
-          id="floatingEmail"
-          type="email"
-          label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <InputField
-          id="floatingPassword"
-          type="password"
-          label="Fjalëkalimi"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <div className="mb-2">
-          <textarea
-            className="form-control"
-            id="floatingComment"
-            placeholder="Koment"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
-            style={{
-              padding: "8px",
-              borderRadius: "5px",
-              border: "1.5px solid #ccc",
-              transition: "all 0.3s ease",
-              fontSize: "0.9rem",
-            }}
-          ></textarea>
-          <label htmlFor="floatingComment" style={{ fontSize: "0.85rem" }}>
-            Koment
-          </label>
-        </div>
-
-        <div className="d-flex justify-content-center mt-2">
-          <button
-            type="button"
-            className="btn btn-primary btn-sm"
-            onClick={handleSubmit}
-            disabled={isLoading}
-            style={{
-              backgroundColor: isLoading ? "#28a745" : "#007bff",
-              padding: "8px 20px",
-              borderRadius: "30px",
-              fontSize: "0.95rem",
-              fontWeight: "bold",
-              border: "none",
-              cursor: "pointer",
-              transition: "background-color 0.3s ease",
-            }}
-          >
-            {isLoading ? (
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            ) : (
-              "Dërgo"
-            )}
-          </button>
-        </div>
+    <div className="container">
+      {/* Header */}
+      <div className="header">
+        <h1>Na Kontaktoni</h1>
+        <p>Ne jemi këtu për t'ju ndihmuar me çdo pyetje që keni.</p>
       </div>
 
-      <style>
-        {`
-          @keyframes fadeIn {
-            0% {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            100% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
+      <div className="contact-section">
+        <div className="content">
+          {/* Contact Info */}
+          <div className="contact-info">
+            <h2>Informacione Kontakti</h2>
+            <div>
+              <h3>Adresa</h3>
+              <p>Rr. Skenderbeu, Nr 15, Tiranë, Shqipëri</p>
+            </div>
+            <div>
+              <h3>Email</h3>
+              <p>info@kompania.com</p>
+            </div>
+            <div>
+              <h3>Telefon</h3>
+              <p>+355 69 123 4567</p>
+            </div>
+            <div>
+              <h3>Orari i Punës</h3>
+              <p>E Hënë - E Premte: 9:00 - 17:00</p>
+              <p>E Shtunë: 10:00 - 14:00</p>
+              <p>E Dielë: Mbyllur</p>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div className="contact-form">
+            <h2>Na dërgoni një mesazh</h2>
+
+            {success && <div className="success">{success}</div>}
+            {error && <div className="error">{error}</div>}
+
+            <form onSubmit={handleSubmit}>
+              <div style={{ marginBottom: "15px" }}>
+                <label className="label">Emri</label>
+                <input
+                  className="input-field"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div style={{ marginBottom: "15px" }}>
+                <label className="label">Email</label>
+                <input
+                  className="input-field"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div style={{ marginBottom: "15px" }}>
+                <label className="label">Mesazhi</label>
+                <textarea
+                  className="textarea-field"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  required
+                  rows={5}
+                />
+              </div>
+
+              <button type="submit" disabled={isSubmitting} className="button">
+                {isSubmitting ? "Duke dërguar..." : "Dërgo Mesazhin"}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="faq-section">
+          <h2>Pyetje të Shpeshta</h2>
+
+          <div className="faq-item">
+            <h3>Sa shpejt do të merrni përgjigje?</h3>
+            <p>
+              Ne synojmë t'ju përgjigjemi brenda 24 orëve gjatë ditëve të punës.
+            </p>
+          </div>
+
+          <div className="faq-item">
+            <h3>Si mund të anuloj një porosi?</h3>
+            <p>
+              Ju mund të anuloni një porosi duke na kontaktuar me email ose
+              telefon brenda 24 orëve nga blerja.
+            </p>
+          </div>
+
+          <div>
+            <h3>A ofron kompania juaj dërgesë të shpejtë?</h3>
+            <p>
+              Po, ne ofrojmë dërgesë të shpejtë për të gjitha porositë në Tiranë
+              dhe rrethinat e saj.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-const styles = {
-  container: {
-    maxWidth: "370px",
-    margin: "0 auto",
-    padding: "12px",
-    backgroundColor: "#f8f9fa",
-    borderRadius: "10px",
-    boxShadow: "0 6px 12px rgba(0, 0, 0, 0.08)",
-    animation: "fadeIn 0.7s ease-in-out",
-  },
-  title: {
-    textAlign: "center",
-    marginBottom: "20px",
-    color: "#333",
-    fontSize: "1.4rem",
-    fontWeight: "bold",
-  },
-  form: {
-    marginBottom: "10px",
-  },
-  successMessage: {
-    padding: "8px 12px",
-    fontSize: "0.85rem",
-    borderRadius: "6px",
-    marginBottom: "12px",
-  },
-  errorMessage: {
-    padding: "8px 12px",
-    fontSize: "0.85rem",
-    borderRadius: "6px",
-    marginBottom: "12px",
-  },
-};
-
-export default KontaktForm;
+export default BasicContactPage;

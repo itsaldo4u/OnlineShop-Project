@@ -4,10 +4,10 @@ import AboutPage from "./Pages/AboutPage";
 import ContactPage from "./Pages/ContactPage";
 import DefaultPage from "./Pages/DefaultPage";
 import HomePage from "./Pages/HomePage";
+import ProductPage from "./Pages/ProductPage";
 import ProductList from "./componentes/products/ProductList";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import ProductPage from "./Pages/ProductPage";
 
 export default function App() {
   return (

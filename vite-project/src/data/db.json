@@ -62,14 +62,25 @@
       "email": ".,nn.@dkfd.com",
       "password": "m,nb",
       "comment": ".,n b"
+    },
+    {
+      "id": "1745581244980",
+      "name": "aldo",
+      "email": "aldo@mail.com",
+      "message": "prsh shjhgaklda.lSKAJkgdfka",
+      "date": "2025-04-25T11:40:44.980Z"
     }
   ],
-  "marketing": [
+  "subscribers": [
     {
-      "name": "aldoo",
-      "title": "aldoooo",
-      "contact": "aldoooooo",
-      "id": "5db3"
+      "id": "1745508590427",
+      "email": "aldo@mail.com",
+      "subscribedAt": "2025-04-24T15:29:50.427Z"
+    },
+    {
+      "id": 1745758044149,
+      "email": "aldoooo@mail.com",
+      "subscribedAt": "2025-04-27T12:47:24.149Z"
     }
   ]
 }

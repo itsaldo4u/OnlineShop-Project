@@ -1,4 +1,3 @@
-
 export default function WelcomeForm() {
   return (
     <>
@@ -29,7 +28,7 @@ export default function WelcomeForm() {
           justifyContent: "center",
           alignItems: "center",
           padding: "0 20px",
-          position: "relative", // This allows the h1 to be positioned over the section
+          position: "relative",
         }}
       >
         <h1
@@ -42,7 +41,7 @@ export default function WelcomeForm() {
             fontWeight: "bold",
             textAlign: "center",
             opacity: 0,
-            animation: "slideIn 2s forwards", // Triggering the animation
+            animation: "slideIn 2s forwards",
           }}
         >
           Welcome to Our Website!

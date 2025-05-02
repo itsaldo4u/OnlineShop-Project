@@ -1,8 +1,8 @@
-import KontaktForm from "../componentes/kontakt/KontaktForm"; // Importoni komponentin e formës
+import KontaktForm from "../componentes/kontakt/KontaktForm";
 
 const AboutPage = () => {
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "80px" }}>
+    <div>
       <KontaktForm />
     </div>
   );

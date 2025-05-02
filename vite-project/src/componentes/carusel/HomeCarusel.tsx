@@ -9,6 +9,7 @@ import img6 from "/care products.jpg";
 export default function AutoplayCarousel() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get("q")?.toLowerCase() || "";
@@ -26,6 +27,7 @@ export default function AutoplayCarousel() {
     },
     { id: 6, image: img6, alt: "Locion Trupi", link: "/products?q=locion" },
   ];
+
   useEffect(() => {
     startAutoplay();
     return () => {
@@ -35,6 +37,20 @@ export default function AutoplayCarousel() {
     };
   }, [isPaused]);
 
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        handlePrevSlide();
+      } else if (e.key === "ArrowRight") {
+        handleNextSlide();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeSlide]);
+
   const startAutoplay = () => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -43,8 +59,18 @@ export default function AutoplayCarousel() {
     if (!isPaused) {
       intervalRef.current = setInterval(() => {
         setActiveSlide((prevSlide) => (prevSlide + 1) % slides.length);
-      }, 2000); // Change slide every 3 seconds
+      }, 2000);
     }
+  };
+
+  const handlePrevSlide = () => {
+    setActiveSlide(
+      (prevSlide) => (prevSlide - 1 + slides.length) % slides.length
+    );
+  };
+
+  const handleNextSlide = () => {
+    setActiveSlide((prevSlide) => (prevSlide + 1) % slides.length);
   };
 
   const handleSlideChange = (index: number) => {
@@ -59,6 +85,27 @@ export default function AutoplayCarousel() {
     setIsPaused(false);
   };
 
+  // Touch handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const touchEnd = e.changedTouches[0].clientX;
+    const difference = touchStart - touchEnd;
+
+    // If swipe distance is significant enough
+    if (Math.abs(difference) > 50) {
+      if (difference > 0) {
+        // Swipe left - go to next slide
+        handleNextSlide();
+      } else {
+        // Swipe right - go to previous slide
+        handlePrevSlide();
+      }
+    }
+  };
+
   return (
     <div
       className="position-relative mt-4 mb-5"
@@ -68,6 +115,8 @@ export default function AutoplayCarousel() {
         className="carousel slide"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="carousel-inner rounded shadow overflow-hidden">
           {slides.map((slide, index) => (
@@ -84,9 +133,9 @@ export default function AutoplayCarousel() {
                   className="d-block w-100"
                   alt={slide.alt}
                   style={{
-                    height: "350px", // Siguron një lartësi fikse për karuselin
-                    width: "100%", // Siguron që imazhi të mbushë gjithë gjerësinë e karuselit
-                    objectFit: "contain", // Ruajti proporcionalitetin e imazhit brenda hapësirës
+                    height: "350px",
+                    width: "100%",
+                    objectFit: "contain",
                     transition: "transform 0.5s ease",
                     transform: isPaused ? "scale(1.05)" : "scale(1)",
                   }}
@@ -107,7 +156,7 @@ export default function AutoplayCarousel() {
                       transition: "opacity 0.3s ease",
                     }}
                   >
-                    Click to view
+                    {slide.alt}
                   </div>
                 </div>
               </a>
@@ -115,13 +164,18 @@ export default function AutoplayCarousel() {
           ))}
         </div>
 
-        {/* Navigation arrows */}
+        {/* Slide counter */}
+        <div
+          className="position-absolute top-0 end-0 mt-2 me-2 bg-dark bg-opacity-75 text-white px-2 py-1 rounded-pill"
+          style={{ fontSize: "0.8rem" }}
+        >
+          {activeSlide + 1}/{slides.length}
+        </div>
+
         <button
           className="carousel-control-prev"
           type="button"
-          onClick={() =>
-            handleSlideChange((activeSlide - 1 + slides.length) % slides.length)
-          }
+          onClick={handlePrevSlide}
           style={{
             width: "40px",
             height: "40px",
@@ -142,7 +196,7 @@ export default function AutoplayCarousel() {
         <button
           className="carousel-control-next"
           type="button"
-          onClick={() => handleSlideChange((activeSlide + 1) % slides.length)}
+          onClick={handleNextSlide}
           style={{
             width: "40px",
             height: "40px",
@@ -161,24 +215,46 @@ export default function AutoplayCarousel() {
         </button>
       </div>
 
-      {/* Indicators */}
-      <div className="carousel-indicators position-relative mt-3">
+      {/* Progress bar */}
+      <div className="progress mt-2" style={{ height: "4px" }}>
+        <div
+          className="progress-bar progress-bar-animated bg-primary"
+          role="progressbar"
+          style={{
+            width: isPaused ? "0%" : "100%",
+            transition: isPaused ? "none" : "width 2s linear",
+          }}
+        ></div>
+      </div>
+
+      {/* Thumbnail indicators */}
+      <div className="d-flex justify-content-center mt-3 gap-2">
         {slides.map((slide, index) => (
           <button
             key={slide.id}
             type="button"
             onClick={() => handleSlideChange(index)}
-            className={`rounded-circle mx-2 ${
-              index === activeSlide ? "active" : ""
+            className={`p-0 border-0 ${
+              index === activeSlide
+                ? "opacity-100 transform scale-110"
+                : "opacity-70"
             }`}
             style={{
-              width: "12px",
-              height: "12px",
-              backgroundColor: index === activeSlide ? "#007bff" : "#dee2e6",
-              border: "none",
+              width: "50px",
+              height: "30px",
+              transition: "all 0.3s ease",
+              overflow: "hidden",
+              borderRadius: "4px",
             }}
             aria-label={`Slide ${index + 1}`}
-          ></button>
+          >
+            <img
+              src={slide.image}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-100 h-100"
+              style={{ objectFit: "cover" }}
+            />
+          </button>
         ))}
       </div>
     </div>

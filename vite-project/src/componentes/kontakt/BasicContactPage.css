@@ -1,0 +1,248 @@
+/* Base Styling */
+body {
+  background-color: #252540;
+  color: #e6e6ff;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* Container styling - this won't affect the navbar */
+.contact-section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Navbar is excluded from these styles by not targeting it directly */
+
+/* Header Styling - added margin-top for navbar clearance */
+.header {
+  background: linear-gradient(135deg, #363656 0%, #2d2d50 100%);
+  padding: 20px;
+  border-radius: 6px;
+  color: white;
+  margin-top: 30px; /* Space for navbar */
+  margin-bottom: 20px;
+  text-align: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.header h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #b8b8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #c0c0e0;
+}
+
+/* Contact Section Layout */
+.contact-section .content {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Contact Info Styling */
+.contact-info,
+.contact-form,
+.faq-section {
+  flex: 1;
+  background: linear-gradient(160deg, #363656 0%, #32324f 100%);
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  color: #e6e6ff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-info:hover,
+.contact-form:hover,
+.faq-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.contact-info h2,
+.contact-form h2,
+.faq-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #d0d0ff;
+  position: relative;
+  padding-bottom: 6px;
+}
+
+.contact-info h2::after,
+.contact-form h2::after,
+.faq-section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 30px;
+  height: 2px;
+  background: #a0a0ff;
+}
+
+.contact-info h3,
+.contact-form h3,
+.faq-section h3 {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.contact-info p,
+.faq-section p {
+  color: #b6b6d8;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* Input Fields Styling */
+.label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #e6e6ff;
+  font-size: 14px;
+}
+
+.input-field,
+.textarea-field {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #5d5d85;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: rgba(50, 50, 77, 0.6);
+  transition: all 0.3s ease;
+}
+
+.input-field:focus,
+.textarea-field:focus {
+  border-color: #a0a0ff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(160, 160, 255, 0.2);
+  background-color: rgba(60, 60, 90, 0.7);
+}
+
+/* Submit Button Styling */
+.button {
+  background: linear-gradient(135deg, #4682ff 0%, #2c5cdc 100%);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(30, 120, 255, 0.3);
+  font-size: 14px;
+}
+
+.button:hover {
+  background: linear-gradient(135deg, #5495ff 0%, #3e6ced 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(30, 120, 255, 0.4);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:disabled {
+  background: linear-gradient(135deg, #4a4a6b 0%, #363652 100%);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Success and Error Messages */
+.success {
+  padding: 12px;
+  background-color: rgba(50, 200, 130, 0.15);
+  color: #5aeca0;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-left: 2px solid #5aeca0;
+}
+
+.error {
+  padding: 12px;
+  background-color: rgba(230, 60, 60, 0.15);
+  color: #ff9090;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-left: 2px solid #ff9090;
+}
+
+/* FAQ Section Styling */
+.faq-item {
+  border-bottom: 1px solid rgba(100, 100, 150, 0.3);
+  padding-bottom: 12px;
+  margin-bottom: 15px;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.faq-item h3 {
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #d0d0ff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.faq-item h3:hover {
+  color: #a0a0ff;
+}
+
+.faq-item p {
+  font-size: 14px;
+  color: #b6b6d8;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .contact-section .content {
+    flex-direction: column;
+  }
+
+  .header {
+    padding: 18px 15px;
+    margin-top: 25px;
+  }
+
+  .contact-info,
+  .contact-form,
+  .faq-section {
+    padding: 18px 15px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+}

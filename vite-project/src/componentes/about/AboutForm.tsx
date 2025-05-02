@@ -4,8 +4,8 @@ const AboutForm = () => {
       style={{
         position: "relative",
         maxWidth: "1000px",
-        margin: "50px auto",
-        padding: "40px",
+        margin: "30px auto",
+        padding: "30px",
         borderRadius: "16px",
         fontFamily: "'Poppins', sans-serif",
         overflow: "hidden",
@@ -60,7 +60,7 @@ const AboutForm = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          gap: "10px",
           textAlign: "center",
           marginBottom: "40px",
         }}
@@ -96,7 +96,7 @@ const AboutForm = () => {
         }}
       >
         <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: "26px", marginBottom: "12px", color: "#fff" }}>
+          <h2 style={{ fontSize: "23px", marginBottom: "12px", color: "#fff" }}>
             Për meshkuj që duan më të mirën
           </h2>
           <p style={{ fontSize: "17px", lineHeight: "1.7", color: "#ddd" }}>
