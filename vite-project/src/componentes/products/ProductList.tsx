@@ -83,6 +83,7 @@ export default function ProductList() {
             description={product.description}
             price={product.price}
             tags={product.tags}
+            id={""}
           />
         ))
       ) : (
