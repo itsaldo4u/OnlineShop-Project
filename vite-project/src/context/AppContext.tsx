@@ -7,16 +7,19 @@ interface Product {
   price: number;
 }
 
-interface MarketingType {
+interface Contact {
+  id: number;
   name: string;
-  title: string;
-  contact: number;
+  email: string;
+  message: string;
+  date: string;
 }
 
 interface AppContextType {
   product: Product[];
-  marketing: MarketingType[];
+  contacts: Contact[];
   gettingData: () => Promise<void>;
+  fetchContacts: () => Promise<void>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -25,25 +28,37 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [product, setProduct] = useState<Product[]>([]);
-  const [marketing, setMarketing] = useState<MarketingType[]>([]);
+  const [contacts, setContacts] = useState<Contact[]>([]);
 
   const gettingData = async () => {
-    const response = await axios.get("http://localhost:3000/data");
-    setProduct(response.data);
+    try {
+      const response = await axios.get("http://localhost:3000/data");
+      console.log("Produktet:", response.data);
+      setProduct(response.data);
+    } catch (error) {
+      console.error("Gabim me produktet:", error);
+    }
   };
 
-  const getMarketing = async () => {
-    const response = await axios.get("http://localhost:3000/marketing");
-    setMarketing(response.data);
+  const fetchContacts = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/contact");
+      console.log("Kontaktet:", response.data);
+      setContacts(response.data);
+    } catch (error) {
+      console.error("Gabim me kontaktet:", error);
+    }
   };
 
   useEffect(() => {
     gettingData();
-    getMarketing();
+    fetchContacts();
   }, []);
 
   return (
-    <AppContext.Provider value={{ product, marketing, gettingData }}>
+    <AppContext.Provider
+      value={{ product, contacts, gettingData, fetchContacts }}
+    >
       {children}
     </AppContext.Provider>
   );

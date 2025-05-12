@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import "./ProductList.css"; // Import the CSS file
 
 type CartItem = {
   id: string;
@@ -30,6 +31,7 @@ const products = [
     tags: ["Pastrim i thellë", "Hidratim dhe freski", "E butë me lëkurën"],
     rating: 4.8,
     discount: "10% OFF",
+    isNew: false, // Explicitly set isNew (false by default, but being explicit here)
   },
   {
     id: "p2",
@@ -39,6 +41,7 @@ const products = [
     price: "€19.99",
     tags: ["Hidratim", "Mbrojtje UV", "Anti-rrudhë"],
     rating: 4.6,
+    isNew: false, // Explicitly set isNew
   },
   {
     id: "p3",
@@ -49,6 +52,7 @@ const products = [
     tags: ["Pa sulfate", "Fortësim flokësh", "Aromë freskuese"],
     rating: 4.2,
     discount: "15% OFF",
+    isNew: false, // Explicitly set isNew
   },
   {
     id: "p4",
@@ -58,6 +62,7 @@ const products = [
     price: "€22.49",
     tags: ["Rritje natyrale", "Vitaminë E", "Nuk irriton lëkurën"],
     rating: 4.9,
+    isNew: false, // Explicitly set isNew
   },
   {
     id: "p5",
@@ -67,6 +72,7 @@ const products = [
     price: "€16.99",
     tags: ["Hiq qelizat e vdekura", "Butësi", "Efekt pastrues"],
     rating: 4.5,
+    isNew: true, // This product should show the NEW badge
   },
   {
     id: "p6",
@@ -77,6 +83,7 @@ const products = [
     tags: ["Lëkurë më e butë", "Aromë relaksuese", "Përditshëm"],
     rating: 4.3,
     discount: "20% OFF",
+    isNew: false, // Explicitly set isNew
   },
   {
     id: "p7",
@@ -87,6 +94,7 @@ const products = [
     price: "€59.99",
     tags: ["Aromë e qëndrueshme", "Për meshkuj", "Klasik modern"],
     rating: 4.9,
+    isNew: true, // This product should show the NEW badge
   },
   {
     id: "p8",
@@ -98,6 +106,7 @@ const products = [
     tags: ["Aromë drunore", "Stil modern", "Për meshkuj"],
     rating: 4.7,
     discount: "10% OFF",
+    isNew: false, // Explicitly set isNew
   },
 ];
 
@@ -242,39 +251,12 @@ export default function ProductList() {
   }, [query, selectedFilter, sortOption]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#111",
-        color: "#fff",
-        minHeight: "100vh",
-        padding: "30px 20px",
-        position: "relative",
-      }}
-    >
+    <div className="product-list-container">
       {/* Header with cart icon */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          marginBottom: "20px",
-          position: "relative",
-        }}
-      >
+      <div className="cart-header">
         <button
           onClick={() => setIsCartOpen(!isCartOpen)}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#fff",
-            cursor: "pointer",
-            position: "relative",
-            padding: "10px",
-            display: "flex",
-            alignItems: "center",
-            transition: "transform 0.3s",
-            transform: cartAnimation === "pulse" ? "scale(1.2)" : "scale(1)",
-          }}
+          className={`cart-button ${cartAnimation ? cartAnimation : "normal"}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -291,176 +273,63 @@ export default function ProductList() {
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
-          {totalItems > 0 && (
-            <span
-              style={{
-                position: "absolute",
-                top: "0",
-                right: "0",
-                backgroundColor: "#ff3860",
-                color: "white",
-                borderRadius: "50%",
-                width: "20px",
-                height: "20px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "0.75rem",
-                fontWeight: "bold",
-              }}
-            >
-              {totalItems}
-            </span>
-          )}
+          {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
         </button>
       </div>
 
       {/* Shopping Cart Drawer */}
       {isCartOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            right: "0",
-            height: "100vh",
-            width: "350px",
-            backgroundColor: "#1e1e2f",
-            boxShadow: "-5px 0 15px rgba(0,0,0,0.3)",
-            zIndex: 1000,
-            padding: "20px",
-            overflowY: "auto",
-            transition: "transform 0.3s ease",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "20px",
-              paddingBottom: "15px",
-              borderBottom: "1px solid #2c2c40",
-            }}
-          >
-            <h2
-              style={{
-                margin: "0",
-                fontSize: "1.3rem",
-              }}
-            >
-              Shporta ({totalItems})
-            </h2>
+        <div className="cart-drawer">
+          <div className="cart-header-section">
+            <h2 className="cart-title">Shporta ({totalItems})</h2>
             <button
               onClick={() => setIsCartOpen(false)}
-              style={{
-                background: "none",
-                border: "none",
-                color: "#aab0bc",
-                cursor: "pointer",
-                fontSize: "1.5rem",
-              }}
+              className="close-cart-button"
             >
               ×
             </button>
           </div>
 
-          <div style={{ flex: 1, overflowY: "auto" }}>
+          <div className="cart-items-container">
             {cartItems.length === 0 ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  padding: "30px 0",
-                  color: "#aab0bc",
-                }}
-              >
-                <div style={{ fontSize: "3rem", marginBottom: "15px" }}>🛒</div>
+              <div className="empty-cart">
+                <div className="empty-cart-icon">🛒</div>
                 <p>Shporta juaj është bosh</p>
               </div>
             ) : (
               <div>
                 {cartItems.map((item) => (
-                  <div
-                    key={item.id}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      padding: "12px 0",
-                      borderBottom: "1px solid #2c2c40",
-                    }}
-                  >
+                  <div key={item.id} className="cart-item">
                     <img
                       src={item.img}
                       alt={item.title}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "5px",
-                        objectFit: "cover",
-                        marginRight: "15px",
-                      }}
+                      className="cart-item-image"
                     />
-                    <div style={{ flex: 1 }}>
-                      <h4 style={{ margin: "0 0 5px 0", fontSize: "0.9rem" }}>
-                        {item.title}
-                      </h4>
-                      <div style={{ fontSize: "0.9rem", color: "#007bff" }}>
-                        {item.price}
-                      </div>
+                    <div className="cart-item-details">
+                      <h4 className="cart-item-title">{item.title}</h4>
+                      <div className="cart-item-price">{item.price}</div>
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginLeft: "10px",
-                      }}
-                    >
+                    <div className="cart-item-actions">
                       <button
                         onClick={() =>
                           updateQuantity(item.id, item.quantity - 1)
                         }
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          background: "#2c2c40",
-                          border: "none",
-                          borderRadius: "3px",
-                          color: "white",
-                          cursor: "pointer",
-                        }}
+                        className="quantity-button"
                       >
                         -
                       </button>
-                      <span style={{ margin: "0 10px", fontSize: "0.9rem" }}>
-                        {item.quantity}
-                      </span>
+                      <span className="quantity-text">{item.quantity}</span>
                       <button
                         onClick={() =>
                           updateQuantity(item.id, item.quantity + 1)
                         }
-                        style={{
-                          width: "25px",
-                          height: "25px",
-                          background: "#2c2c40",
-                          border: "none",
-                          borderRadius: "3px",
-                          color: "white",
-                          cursor: "pointer",
-                        }}
+                        className="quantity-button"
                       >
                         +
                       </button>
                       <button
                         onClick={() => removeFromCart(item.id)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "#ff3860",
-                          cursor: "pointer",
-                          marginLeft: "10px",
-                          fontSize: "1.1rem",
-                        }}
+                        className="remove-item-button"
                       >
                         ×
                       </button>
@@ -472,49 +341,19 @@ export default function ProductList() {
           </div>
 
           {cartItems.length > 0 && (
-            <div style={{ marginTop: "auto", paddingTop: "20px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "15px",
-                  fontSize: "1rem",
-                }}
-              >
+            <div className="cart-footer">
+              <div className="cart-total">
                 <span>Totali:</span>
                 <span style={{ fontWeight: "bold" }}>
                   €{totalPrice.toFixed(2)}
                 </span>
               </div>
 
-              <div style={{ display: "flex", gap: "10px" }}>
-                <button
-                  onClick={clearCart}
-                  style={{
-                    flex: "1",
-                    padding: "10px",
-                    background: "#2c2c40",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
+              <div className="cart-actions">
+                <button onClick={clearCart} className="clear-cart-button">
                   Pastro
                 </button>
-                <button
-                  style={{
-                    flex: "2",
-                    padding: "10px",
-                    background: "#007bff",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  Vazhdo në Arkë
-                </button>
+                <button className="checkout-button">Vazhdo në Arkë</button>
               </div>
             </div>
           )}
@@ -523,84 +362,30 @@ export default function ProductList() {
 
       {/* Overlay when cart is open */}
       {isCartOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            zIndex: 999,
-          }}
-          onClick={() => setIsCartOpen(false)}
-        />
+        <div className="cart-overlay" onClick={() => setIsCartOpen(false)} />
       )}
 
       {/* Search results heading */}
       {query && (
-        <div style={{ marginBottom: "20px", textAlign: "center" }}>
-          <h2
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "500",
-              color: "#e0e0e0",
-            }}
-          >
+        <div className="search-results-heading">
+          <h2 className="search-results-title">
             Rezultatet e kërkimit për:{" "}
-            <span style={{ color: "#007bff" }}>{query}</span>
+            <span className="search-query">{query}</span>
           </h2>
         </div>
       )}
 
       {/* Filter and Sort Controls */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          marginBottom: "25px",
-          padding: "15px 20px",
-          borderRadius: "10px",
-          backgroundColor: "#1e1e2f",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-        }}
-      >
+      <div className="filter-sort-container">
         {/* Category filters */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-            margin: "10px 0",
-          }}
-        >
+        <div className="filter-buttons">
           {filters.map((filter) => (
             <button
               key={filter.key}
               onClick={() => setSelectedFilter(filter.key)}
-              style={{
-                padding: "6px 12px",
-                borderRadius: "20px",
-                fontSize: "0.9rem",
-                border: "none",
-                cursor: "pointer",
-                backgroundColor:
-                  selectedFilter === filter.key ? "#007bff" : "#2c2c40",
-                color: selectedFilter === filter.key ? "white" : "#aab0bc",
-                transition: "all 0.3s ease",
-              }}
-              onMouseOver={(e) => {
-                if (selectedFilter !== filter.key) {
-                  e.currentTarget.style.backgroundColor = "#353550";
-                }
-              }}
-              onMouseOut={(e) => {
-                if (selectedFilter !== filter.key) {
-                  e.currentTarget.style.backgroundColor = "#2c2c40";
-                }
-              }}
+              className={`filter-button ${
+                selectedFilter === filter.key ? "active" : "inactive"
+              }`}
             >
               {filter.label}
             </button>
@@ -608,30 +393,12 @@ export default function ProductList() {
         </div>
 
         {/* Sort options */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            margin: "10px 0",
-          }}
-        >
-          <label style={{ fontSize: "0.9rem", color: "#aab0bc" }}>
-            Rendit sipas:
-          </label>
+        <div className="sort-container">
+          <label className="sort-label">Rendit sipas:</label>
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
-            style={{
-              padding: "6px 12px",
-              borderRadius: "20px",
-              fontSize: "0.9rem",
-              border: "none",
-              backgroundColor: "#2c2c40",
-              color: "white",
-              cursor: "pointer",
-              outline: "none",
-            }}
+            className="sort-select"
           >
             <option value="default">Parazgjedhur</option>
             <option value="price-low">Çmimi: I ulët - I lartë</option>
@@ -642,24 +409,10 @@ export default function ProductList() {
       </div>
 
       {/* Product Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "25px",
-          justifyContent: "center",
-          padding: "10px",
-        }}
-      >
+      <div className="product-grid">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
+            <div key={product.id} className="product-card-container">
               <ProductCard
                 id={product.id}
                 img={product.img}
@@ -669,26 +422,16 @@ export default function ProductList() {
                 tags={product.tags}
                 rating={product.rating}
                 discount={product.discount}
+                isNew={product.isNew} // Make sure to pass isNew property here!
                 onAddToCart={() => addToCart(product)}
               />
             </div>
           ))
         ) : (
-          <div
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-              padding: "40px 20px",
-              backgroundColor: "#1e1e2f",
-              borderRadius: "10px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.2)",
-            }}
-          >
-            <div style={{ fontSize: "3rem", marginBottom: "20px" }}>😕</div>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>
-              Nuk u gjet asnjë produkt
-            </h3>
-            <p style={{ color: "#aab0bc", fontSize: "1rem" }}>
+          <div className="no-products-found">
+            <div className="no-products-emoji">😕</div>
+            <h3 className="no-products-title">Nuk u gjet asnjë produkt</h3>
+            <p className="no-products-message">
               Nuk u gjet asnjë produkt për: <strong>{query}</strong>
               {selectedFilter !== "all" && (
                 <>
@@ -702,16 +445,7 @@ export default function ProductList() {
                 setSelectedFilter("all");
                 setSortOption("default");
               }}
-              style={{
-                marginTop: "20px",
-                padding: "8px 16px",
-                backgroundColor: "#007bff",
-                color: "white",
-                border: "none",
-                borderRadius: "20px",
-                cursor: "pointer",
-                fontSize: "0.9rem",
-              }}
+              className="reset-filters-button"
             >
               Reset Filtrave
             </button>
@@ -721,14 +455,7 @@ export default function ProductList() {
 
       {/* Product count */}
       {filteredProducts.length > 0 && (
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: "25px",
-            color: "#aab0bc",
-            fontSize: "0.9rem",
-          }}
-        >
+        <div className="product-count">
           Duke shfaqur {filteredProducts.length} produkte nga {products.length}
         </div>
       )}

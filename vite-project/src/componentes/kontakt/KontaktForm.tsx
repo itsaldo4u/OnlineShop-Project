@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./BasicContactPage.css";
+import "./KontaktForm.css";
 
 const BasicContactPage = () => {
   const [name, setName] = useState("");
@@ -18,7 +18,7 @@ const BasicContactPage = () => {
 
   const fetchSubmissions = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/contact");
+      const response = await axios.get("http://localhost:3000/contact");
       setSubmissions(response.data);
     } catch (err) {
       console.error("Error fetching contact submissions:", err);

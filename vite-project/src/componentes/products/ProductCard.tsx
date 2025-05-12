@@ -10,6 +10,7 @@ type ProductCardProps = {
   tags: string[];
   discount?: string;
   rating?: number;
+  isNew?: boolean;
   onAddToCart: () => void;
 };
 
@@ -21,6 +22,7 @@ export default function ProductCard({
   tags,
   discount,
   rating = 4.5,
+  isNew,
   onAddToCart,
 }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
@@ -90,7 +92,7 @@ export default function ProductCard({
           onMouseEnter={() => setIsImgHovered(true)}
           onMouseLeave={() => setIsImgHovered(false)}
         />
-        <span className="new-badge">NEW</span>
+        {isNew && <span className="new-badge">NEW</span>}
       </div>
 
       <div className="card-content">
