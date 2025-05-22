@@ -12,8 +12,8 @@ export default function HomePAge() {
       <HomeCarusel />
       <FeedbackSection />
       <ProductList />
-      <KontaktForm />
       <AboutPage />
+      <KontaktForm />
     </>
   );
 }

@@ -1,54 +1,61 @@
-# React + TypeScript + Vite
+# OnlineShop Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern e-commerce web application that provides a complete online shopping experience.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Product Catalog**: Browse and search through a wide variety of products
+- **Shopping Cart**: Add, remove, and manage items in your cart
+- **Order Management**: Place orders and track order history
+- **Responsive Design**: Optimized for desktop and mobile devices
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠️ Technologies Used
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Frontend: HTML5, CSS3, TypeScript
+- Backend: [ Node.js.]
+- Database: [Data Fetching with Axios]
+- Framework: [ React, Vite.]
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📋 Prerequisites
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Before running this project, make sure you have the following installed:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- [List prerequisites like Node.js.]
+- [Database system]
+- [Web server like Apache/Nginx if needed]
+
+## 🔧 Installation
+
+1. **Clone the repository**
+
+   ```powershell
+   git clone https://github.com/itsaldo4u/OnlineShop-Project.git
+   cd vite-project
+   ```
+
+2. **Install dependencies**
+
+   ```powershell
+   # npm install
+   # npm install axios
+   # npm run server
+   # npm run dev
+   ```
+
+
+## 👥 Authors
+
+- **itsaldo4u** - _Initial work_ - [GitHub Profile](https://github.com/itsaldo4u)
+
+
+## 📞 Support
+
+If you have any questions or need help with setup, please:
+
+- Open an issue on GitHub
+- Contact: [aldomecani20@gmail.com]
+
+---
+
+⭐ If you found this project helpful, please give it a star on GitHub!

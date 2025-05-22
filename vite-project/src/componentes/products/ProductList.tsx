@@ -31,7 +31,7 @@ const products = [
     tags: ["Pastrim i thellë", "Hidratim dhe freski", "E butë me lëkurën"],
     rating: 4.8,
     discount: "10% OFF",
-    isNew: false, // Explicitly set isNew (false by default, but being explicit here)
+    isNew: false,
   },
   {
     id: "p2",
@@ -41,7 +41,7 @@ const products = [
     price: "€19.99",
     tags: ["Hidratim", "Mbrojtje UV", "Anti-rrudhë"],
     rating: 4.6,
-    isNew: false, // Explicitly set isNew
+    isNew: false,
   },
   {
     id: "p3",
@@ -52,7 +52,7 @@ const products = [
     tags: ["Pa sulfate", "Fortësim flokësh", "Aromë freskuese"],
     rating: 4.2,
     discount: "15% OFF",
-    isNew: false, // Explicitly set isNew
+    isNew: false,
   },
   {
     id: "p4",
@@ -62,7 +62,7 @@ const products = [
     price: "€22.49",
     tags: ["Rritje natyrale", "Vitaminë E", "Nuk irriton lëkurën"],
     rating: 4.9,
-    isNew: false, // Explicitly set isNew
+    isNew: false,
   },
   {
     id: "p5",
@@ -72,7 +72,7 @@ const products = [
     price: "€16.99",
     tags: ["Hiq qelizat e vdekura", "Butësi", "Efekt pastrues"],
     rating: 4.5,
-    isNew: true, // This product should show the NEW badge
+    isNew: true,
   },
   {
     id: "p6",
@@ -83,7 +83,7 @@ const products = [
     tags: ["Lëkurë më e butë", "Aromë relaksuese", "Përditshëm"],
     rating: 4.3,
     discount: "20% OFF",
-    isNew: false, // Explicitly set isNew
+    isNew: false,
   },
   {
     id: "p7",
@@ -94,7 +94,7 @@ const products = [
     price: "€59.99",
     tags: ["Aromë e qëndrueshme", "Për meshkuj", "Klasik modern"],
     rating: 4.9,
-    isNew: true, // This product should show the NEW badge
+    isNew: true,
   },
   {
     id: "p8",
@@ -106,7 +106,7 @@ const products = [
     tags: ["Aromë drunore", "Stil modern", "Për meshkuj"],
     rating: 4.7,
     discount: "10% OFF",
-    isNew: false, // Explicitly set isNew
+    isNew: false,
   },
 ];
 
