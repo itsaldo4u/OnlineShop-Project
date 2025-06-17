@@ -4,12 +4,13 @@ import Footer from "../componentes/footer/Footer";
 import WelcomeForm from "../componentes/welcome/WelcomeForm";
 
 export default function DefaultPage() {
-  const location = useLocation(); // Get the current route
+  const location = useLocation();
+  const showWelcome = location.pathname === "/" || location.pathname === "/home";
 
   return (
     <>
       <Navbar />
-      {location.pathname === "/" && <WelcomeForm />}
+      {showWelcome && <WelcomeForm />}
       <Outlet />
       <Footer />
     </>

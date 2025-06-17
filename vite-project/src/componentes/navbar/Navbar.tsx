@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
@@ -54,9 +55,9 @@ const Navbar = () => {
         {/* Brand section */}
         <div className="d-flex align-items-center">
           <img src="shopping.png" alt="iShopping Logo" style={logoStyle} />
-          <a className="navbar-brand text-white" href="/" style={brandStyle}>
+          <Link className="navbar-brand text-white" to="/" style={brandStyle}>
             iShopping
-          </a>
+          </Link>
         </div>
 
         {/* Hamburger button */}
@@ -79,91 +80,46 @@ const Navbar = () => {
           style={isNavOpen ? collapseStyle : {}}
         >
           <div className="navbar-nav ms-auto text-center">
-            <a
-              className="nav-link text-white"
-              href="/home"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Home
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/about"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              About
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/contact"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Contact
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/product"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Product
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/admindashboard"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Log In
-            </a>
+            {["home", "about", "contact", "product"].map((path) => (
+              <Link
+                key={path}
+                className="nav-link text-white"
+                to={`/${path}`}
+                onClick={() => setIsNavOpen(false)}
+                style={navLinkStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor =
+                    "rgba(255, 255, 255, 0.1)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                {path.charAt(0).toUpperCase() + path.slice(1)}
+              </Link>
+            ))}
+
+            {/* Log In (link te /login) */}
+            <Link
+  className="nav-link text-white"
+  to="/login"
+  onClick={() => setIsNavOpen(false)}
+  style={navLinkStyle}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.backgroundColor = "rgba(0, 255, 0, 0.1)";
+    e.currentTarget.style.boxShadow = "0 0 8px rgba(0, 255, 0, 0.5)";
+    e.currentTarget.style.transform = "translateY(-1px)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.backgroundColor = "transparent";
+    e.currentTarget.style.boxShadow = "none";
+    e.currentTarget.style.transform = "translateY(0)";
+  }}
+>
+  Log In
+</Link>
           </div>
         </div>
       </div>
