@@ -2,7 +2,6 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import "./ProductList.css";
-import axios from "axios";
 import { useAppContext } from "../../context/AppContext";
 
 type CartItem = {
@@ -12,15 +11,17 @@ type CartItem = {
   quantity: number;
   img: string;
 };
-
-type CartContextType = {
-  cartItems: CartItem[];
-  addToCart: (product: any) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  clearCart: () => void;
-  isCartOpen: boolean;
-  setIsCartOpen: (isOpen: boolean) => void;
+type ProductData = {
+  id: string;
+  img: string;
+  title: string;
+  description: string;
+  price: string;
+  tags: string[];
+  filterTags: string[];
+  rating?: number;
+  discount?: string;
+  isNew?: boolean;
 };
 
 const filters = [
@@ -40,7 +41,7 @@ export default function ProductList() {
 
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [sortOption, setSortOption] = useState("default");
-  const [filteredProducts, setFilteredProducts] = useState(productdata);
+  const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
 
   // Shopping cart state
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -50,18 +51,15 @@ export default function ProductList() {
   // Add to cart function
   const addToCart = (product: any) => {
     setCartItems((prevItems) => {
-      // Check if item already exists in cart
       const existingItem = prevItems.find((item) => item.id === product.id);
 
       if (existingItem) {
-        // Increase quantity if item exists
         return prevItems.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
       } else {
-        // Add new item with quantity 1
         return [
           ...prevItems,
           {
@@ -75,10 +73,7 @@ export default function ProductList() {
       }
     });
 
-    // Show cart after adding item
     setIsCartOpen(true);
-
-    // Animate cart icon
     setCartAnimation("pulse");
     setTimeout(() => setCartAnimation(""), 500);
   };
@@ -105,67 +100,40 @@ export default function ProductList() {
     setCartItems([]);
   };
 
-  // Calculate total items in cart
+  // Calculate total items and price
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  // Calculate total price
   const totalPrice = cartItems.reduce((sum, item) => {
     const itemPrice = parseFloat(item.price.replace(/[^0-9.]/g, ""));
     return sum + itemPrice * item.quantity;
   }, 0);
 
-  // Filter and sort products when query, filter or sort option changes
+  // Filter and sort products when query, filter or sort changes
   useEffect(() => {
     let result = [...productdata];
 
-    // Apply search filter
     if (query) {
       result = result.filter(
-        (productdata) =>
-          productdata.title.toLowerCase().includes(query) ||
-          productdata.description.toLowerCase().includes(query) ||
-          productdata.tags.some((tag) => tag.toLowerCase().includes(query))
+        (product) =>
+          product.title.toLowerCase().includes(query) ||
+          product.description.toLowerCase().includes(query) ||
+          product.tags.some((tag) => tag.toLowerCase().includes(query))
       );
     }
 
-    // Apply category filter
     if (selectedFilter !== "all") {
       if (selectedFilter === "discount") {
-        result = result.filter((productdata) => productdata.discount);
-      } else if (selectedFilter === "parfum") {
+        result = result.filter((product) => product.discount);
+      } else {
         result = result.filter(
-          (productdata) =>
-            Array.isArray(productdata.tags) &&
-            productdata.tags.some((tag) => tag.includes("parfum"))
-        );
-      } else if (selectedFilter === "hidratim") {
-        result = result.filter(
-          (productdata) =>
-            Array.isArray(productdata.tags) &&
-            productdata.tags.some((tag) =>
-              tag.toLowerCase().includes("hidratim")
-            )
-        );
-      } else if (selectedFilter === "natyral") {
-        result = result.filter(
-          (productdata) =>
-            Array.isArray(productdata.tags) &&
-            productdata.tags.some((tag) =>
-              tag.toLowerCase().includes("natyral")
-            )
-        );
-      } else if (selectedFilter === "pastrim") {
-        result = result.filter(
-          (productdata) =>
-            Array.isArray(productdata.tags) &&
-            productdata.tags.some((tag) =>
-              tag.toLowerCase().includes("pastrim")
+          (product) =>
+            Array.isArray(product.filterTags) &&
+            product.filterTags.some((tag) =>
+              tag.toLowerCase().includes(selectedFilter)
             )
         );
       }
     }
 
-    // Apply sorting
     if (sortOption === "price-low") {
       result.sort((a, b) => {
         const priceA = parseFloat(a.price.replace(/[^0-9.]/g, ""));
@@ -183,7 +151,7 @@ export default function ProductList() {
     }
 
     setFilteredProducts(result);
-  }, [query, selectedFilter, sortOption]);
+  }, [query, selectedFilter, sortOption, productdata]);
 
   return (
     <div className="product-list-container">
@@ -355,9 +323,10 @@ export default function ProductList() {
                 description={product.description}
                 price={product.price}
                 tags={product.tags}
+                filterTags={product.filterTags}
                 rating={product.rating}
                 discount={product.discount}
-                isNew={product.isNew} // Make sure to pass isNew property here!
+                isNew={product.isNew}
                 onAddToCart={() => addToCart(product)}
               />
             </div>

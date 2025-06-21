@@ -48,34 +48,6 @@
       "email": "aldo@mail.com",
       "password": "aaaaaa",
       "comment": "iiiiiiii\n"
-    },
-    {
-      "id": "7617",
-      "name": "klajdi",
-      "email": "klajdi@mail.com",
-      "password": "klajdi",
-      "comment": "klajdi"
-    },
-    {
-      "id": "bc5f",
-      "name": "m,bb",
-      "email": ".,nn.@dkfd.com",
-      "password": "m,nb",
-      "comment": ".,n b"
-    },
-    {
-      "id": "1745581244980",
-      "name": "aldo",
-      "email": "aldo@mail.com",
-      "message": "prsh shjhgaklda.lSKAJkgdfka",
-      "date": "2025-04-25T11:40:44.980Z"
-    },
-    {
-      "id": 1747925385983,
-      "name": "khfkahd",
-      "email": "vvvvv@mail.com",
-      "message": "dgfkldgfilsgfadfhlahf",
-      "date": "2025-05-22T14:49:45.983Z"
     }
   ],
   "subscribers": [
@@ -83,16 +55,6 @@
       "id": "1745508590427",
       "email": "aldo@mail.com",
       "subscribedAt": "2025-04-24T15:29:50.427Z"
-    },
-    {
-      "id": "1745758044149",
-      "email": "aldoooo@mail.com",
-      "subscribedAt": "2025-04-27T12:47:24.149Z"
-    },
-    {
-      "id": 1747925396102,
-      "email": "vvv@mail.com",
-      "subscribedAt": "2025-05-22T14:49:56.102Z"
     }
   ],
   "productdata": [
@@ -106,6 +68,11 @@
         "Pastrim i thellë",
         "Hidratim dhe freski",
         "E butë me lëkurën"
+      ],
+      "filterTags": [
+        "Hidratim",
+        "natyral",
+        "Pastrim"
       ],
       "rating": 4.8,
       "discount": "10% OFF",
@@ -122,6 +89,10 @@
         "Mbrojtje UV",
         "Anti-rrudhë"
       ],
+      "filterTags": [
+        "Hidratim",
+        "natyral"
+      ],
       "rating": 4.6,
       "isNew": false
     },
@@ -135,6 +106,10 @@
         "Pa sulfate",
         "Fortësim flokësh",
         "Aromë freskuese"
+      ],
+      "filterTags": [
+        "Pastrim",
+        "natyral"
       ],
       "rating": 4.2,
       "discount": "15% OFF",
@@ -151,22 +126,29 @@
         "Vitaminë E",
         "Nuk irriton lëkurën"
       ],
+      "filterTags": [
+        "Hidratim",
+        "natyral"
+      ],
       "rating": 4.9,
       "isNew": false
     },
     {
       "id": "p5",
       "img": "naturalskincare.jpg",
-      " title": "Scrub Fytyre",
-      " description": "Eksfoliues i butë për lëkurë të freskët dhe të pastër.",
-      " price": "€16.99",
-      " tags": [
+      "title": "Scrub Fytyre",
+      "description": "Eksfoliues i butë për lëkurë të freskët dhe të pastër.",
+      "price": "€16.99",
+      "tags": [
         "Hiq qelizat e vdekura",
         "Butësi",
         "Efekt pastrues"
       ],
-      " rating": 4.5,
-      " isNew": true
+      "filterTags": [
+        "Pastrim"
+      ],
+      "rating": 4.5,
+      "isNew": true
     },
     {
       "id": "p6",
@@ -179,13 +161,17 @@
         "Aromë relaksuese",
         "Përditshëm"
       ],
+      "filterTags": [
+        "Pastrim",
+        "Hidratim"
+      ],
       "rating": 4.3,
       "discount": "20% OFF",
       "isNew": false
     },
     {
       "id": "p7",
-      "img": "JeanPaul.png",
+      "img": "public/JeanPaul.png",
       "title": "Jean Paul Gaultier Le Male",
       "description": "Parfum ikonik me nota vanilje, nenexhik dhe lavandë për një aromë të parezistueshme dhe elegante.",
       "price": "€59.99",
@@ -193,6 +179,9 @@
         "Aromë e qëndrueshme",
         "Për meshkuj",
         "Klasik modern"
+      ],
+      "filterTags": [
+        "Parfum"
       ],
       "rating": 4.9,
       "isNew": true
@@ -208,9 +197,30 @@
         "Stil modern",
         "Për meshkuj parfum"
       ],
+      "filterTags": [
+        "Parfum"
+      ],
       "rating": 4.7,
       "discount": "10% OFF",
       "isNew": false
+    },
+    {
+      "id": "9ak86u04a",
+      "img": "JeanPaul.png",
+      "title": "Aldo",
+      "description": "programues front-end development",
+      "price": "25",
+      "tags": [
+        "programer",
+        "digital",
+        "marketing"
+      ],
+      "filterTags": [
+        "pastrim"
+      ],
+      "rating": 5,
+      "discount": "15",
+      "isNew": true
     }
   ]
 }

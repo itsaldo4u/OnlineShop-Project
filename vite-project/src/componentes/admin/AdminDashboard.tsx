@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ProductTable from "./ProductTable";
+import OrderManagement from "./OrderMenagment";
 
-const VerticalTabsBootstrap = () => {
-  const [activeTab, setActiveTab] = useState(""); // bosh fillimisht
+const AdminDashboard = () => {
+  const [activeTab, setActiveTab] = useState("");
   const [showTabs, setShowTabs] = useState(false);
 
   const tabs = [
@@ -14,19 +15,39 @@ const VerticalTabsBootstrap = () => {
   ];
 
   return (
-    <div className="d-flex">
+    <div className="d-flex min-vh-100">
       {/* Sidebar */}
       <div
-        className="p-3 border-end mt-5 bg-light"
-        style={{ width: "220px", minHeight: "100vh" }}
+        className="bg-dark text-white shadow transition-all"
+        style={{
+          width: showTabs ? "250px" : "60px",
+          minHeight: "100vh",
+          transition: "width 0.3s ease",
+          padding: showTabs ? "1rem" : "0.5rem",
+        }}
       >
-        <button
-          className="btn btn-primary w-100 mb-3"
-          onClick={() => setShowTabs((prev) => !prev)}
-        >
-          <i className="bi bi-list  me-2"></i>
-          Dashboard
-        </button>
+        {showTabs && (
+          <div className="mb-4 pb-3 border-bottom border-secondary">
+            <h5 className="mb-0">
+              <i className="bi bi-speedometer2 me-2"></i>
+              Admin Panel
+            </h5>
+          </div>
+        )}
+
+        <div className="mb-3">
+          <button
+            className="btn mt-5 btn-outline-light w-100 d-flex align-items-center justify-content-center"
+            onClick={() => setShowTabs((prev) => !prev)}
+            style={{
+              minHeight: "40px",
+              padding: "0.5rem",
+            }}
+          >
+            <i className="bi bi-list" style={{ fontSize: "1.2rem" }}></i>
+            {showTabs && <span className="ms-2">Dashboard Menu</span>}
+          </button>
+        </div>
 
         {showTabs && (
           <div>
@@ -34,16 +55,18 @@ const VerticalTabsBootstrap = () => {
               <button
                 key={tab.id}
                 type="button"
-                className={`btn btn-outline-primary d-flex align-items-center w-100 mb-2 text-start ${
-                  activeTab === tab.id ? "active" : ""
+                className={`btn d-flex align-items-center w-100 mb-2 text-start ${
+                  activeTab === tab.id
+                    ? "btn-light text-dark"
+                    : "btn-outline-light"
                 }`}
                 onClick={() => {
                   setActiveTab(tab.id);
                   setShowTabs(false);
                 }}
-                style={{ gap: "8px" }}
+                style={{ gap: "10px" }}
               >
-                <i className={tab.icon} style={{ fontSize: "1.2rem" }}></i>
+                <i className={tab.icon}></i>
                 <span>{tab.label}</span>
               </button>
             ))}
@@ -51,22 +74,109 @@ const VerticalTabsBootstrap = () => {
         )}
       </div>
 
-      {/* Përmbajtja që ndryshon sipas tab */}
-      <div className="p-4 flex-grow-1">
-        {activeTab === "dashboard" && <ProductTable />}
-        {activeTab === "users" && <p>Përdoruesit do shfaqen këtu.</p>}
-        {activeTab === "order" && <p>Porosit do shfaqen këtu.</p>}
-        {activeTab === "rates" && <p>Vlerësimi do shfaqet këtu.</p>}
-        {activeTab === "raport" && <p>Raportet do shfaqen këtu.</p>}
-        {!activeTab && (
-          <div className="text-center mt-5 text-muted">
-            <i className="bi bi-arrow-left-circle me-2"></i>
-            Zgjidh një seksion nga menuja
-          </div>
-        )}
+      <div className="flex-grow-1 bg-light">
+        <div className="bg-white shadow-sm p-3 border-bottom">
+          <h4 className="mb-0">
+            {activeTab === "dashboard" && "Menaxhimi i Produkteve"}
+            {activeTab === "users" && "Menaxhimi i Përdoruesve"}
+            {activeTab === "order" && "Menaxhimi i Porosive"}
+            {activeTab === "rates" && "Vlerësimet"}
+            {activeTab === "raport" && "Raportet"}
+            {!activeTab && "Admin Dashboard"}
+          </h4>
+        </div>
+
+        {/* Content Area */}
+        <div className="p-4">
+          {activeTab === "dashboard" && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <ProductTable />
+            </div>
+          )}
+
+          {activeTab === "users" && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <div className="text-center py-4">
+                <i
+                  className="bi bi-people text-muted mb-3"
+                  style={{ fontSize: "3rem" }}
+                ></i>
+                <h5>Menaxhimi i Përdoruesve</h5>
+                <p className="text-muted">Përdoruesit do shfaqen këtu.</p>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "order" && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <OrderManagement />
+            </div>
+          )}
+
+          {activeTab === "rates" && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <div className="text-center py-4">
+                <i
+                  className="bi bi-star-half text-muted mb-3"
+                  style={{ fontSize: "3rem" }}
+                ></i>
+                <h5>Vlerësimet</h5>
+                <p className="text-muted">Vlerësimi do shfaqet këtu.</p>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "raport" && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <div className="text-center py-4">
+                <i
+                  className="bi bi-graph-up text-muted mb-3"
+                  style={{ fontSize: "3rem" }}
+                ></i>
+                <h5>Raportet</h5>
+                <p className="text-muted">Raportet do shfaqen këtu.</p>
+              </div>
+            </div>
+          )}
+
+          {!activeTab && (
+            <div className="bg-white rounded p-4 shadow-sm">
+              <div className="text-center py-5">
+                <i
+                  className="bi bi-speedometer2 text-primary mb-3"
+                  style={{ fontSize: "4rem" }}
+                ></i>
+                <h3>Mirësevini në Admin Dashboard</h3>
+                <p className="text-muted">
+                  Zgjidhni një seksion nga menuja për të filluar.
+                </p>
+
+                <div className="row mt-4">
+                  {tabs.map((tab) => (
+                    <div key={tab.id} className="col-md-6 col-lg-4 mb-3">
+                      <div
+                        className="card h-100 border-0 shadow-sm"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => setActiveTab(tab.id)}
+                      >
+                        <div className="card-body text-center">
+                          <i
+                            className={`${tab.icon} text-primary mb-2`}
+                            style={{ fontSize: "2rem" }}
+                          ></i>
+                          <h6 className="card-title">{tab.label}</h6>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default VerticalTabsBootstrap;
+export default AdminDashboard;
