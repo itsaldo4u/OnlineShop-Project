@@ -18,7 +18,7 @@ const AdminDashboard = () => {
     <div className="d-flex min-vh-100">
       {/* Sidebar */}
       <div
-        className="bg-dark text-white shadow transition-all"
+        className="bg-dark mt-5 text-white shadow transition-all"
         style={{
           width: showTabs ? "250px" : "60px",
           minHeight: "100vh",
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
       >
         {showTabs && (
           <div className="mb-4 pb-3 border-bottom border-secondary">
-            <h5 className="mb-0">
+            <h5 className="mb-0" style={{ fontSize: "18px" }}>
               <i className="bi bi-speedometer2 me-2"></i>
               Admin Panel
             </h5>

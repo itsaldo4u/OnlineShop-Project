@@ -205,7 +205,7 @@ const ProductTable = () => {
                         className="badge bg-danger"
                         style={{ fontSize: "0.7rem" }}
                       >
-                        -{p.discount}%
+                        -{p.discount}
                       </span>
                     </div>
                   )}
@@ -224,7 +224,7 @@ const ProductTable = () => {
                     "-"
                   )}
                 </td>
-                <td>{p.discount ? `${p.discount}%` : "-"}</td>
+                <td>{p.discount ? `${p.discount}` : "-"}</td>
                 <td>
                   <span
                     className={`badge ${
