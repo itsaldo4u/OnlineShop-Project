@@ -1,10 +1,23 @@
 import { useState } from "react";
+import { useAppContext } from "../../context/AppContext"; // ndryshoje rrugën nëse s’është e saktë
+import { Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";  // Shto këtë import
 
-const Navbar = () => {
+const Navbar = () => { 
+  const navigate = useNavigate();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { currentUser, setCurrentUser, } = useAppContext();
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
+  };
+ 
+
+  const handleLogout = () => {
+    logout();               // thirr logout funksionin
+    setCurrentUser(null);
+    setIsNavOpen(false);
+    navigate('/login'); 
   };
 
   const navbarStyle = {
@@ -51,7 +64,7 @@ const Navbar = () => {
       style={navbarStyle}
     >
       <div className="container-fluid px-3">
-        {/* Brand section */}
+        {/* Brand */}
         <div className="d-flex align-items-center">
           <img src="shopping.png" alt="iShopping Logo" style={logoStyle} />
           <a className="navbar-brand text-white" href="/" style={brandStyle}>
@@ -59,7 +72,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* Hamburger button */}
+        {/* Hamburger toggle */}
         <button
           className="navbar-toggler"
           type="button"
@@ -79,91 +92,76 @@ const Navbar = () => {
           style={isNavOpen ? collapseStyle : {}}
         >
           <div className="navbar-nav ms-auto text-center">
-            <a
-              className="nav-link text-white"
-              href="/home"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Home
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/about"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              About
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/contact"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Contact
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/product"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Product
-            </a>
-            <a
-              className="nav-link text-white"
-              href="/admindashboard"
-              onClick={() => setIsNavOpen(false)}
-              style={navLinkStyle}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor =
-                  "rgba(255, 255, 255, 0.1)";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "transparent";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Log In
-            </a>
+            {["home", "about", "contact", "product"].map((link) => (
+              <a
+                key={link}
+                className="nav-link text-white"
+                href={`/${link}`}
+                onClick={() => setIsNavOpen(false)}
+                style={navLinkStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor =
+                    "rgba(255, 255, 255, 0.1)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                {link.charAt(0).toUpperCase() + link.slice(1)}
+              </a>
+            ))}
+
+            {currentUser ? (
+<div className="nav-item dropdown">
+  <button
+    className="btn btn-dark dropdown-toggle"
+    id="userDropdown"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+    style={{
+      fontWeight: "bold",
+      padding: "8px 16px",
+      borderRadius: "4px",
+      border: "1px solid rgba(255,255,255,0.2)",
+    }}
+  >
+    {currentUser.name}
+  </button>
+  <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+    <li>
+      <a className="dropdown-item" href="admindashboard">
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <button className="dropdown-item text-danger" onClick={handleLogout}>
+        Dil
+      </button>
+    </li>
+  </ul>
+</div>
+
+            ) : (
+              <a
+                className="nav-link text-white"
+                href="/login"
+                onClick={() => setIsNavOpen(false)}
+                style={navLinkStyle}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor =
+                    "rgba(255, 255, 255, 0.1)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.transform = "translateY(0)";
+                }}
+              >
+                Log In
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -172,3 +170,9 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// Implementim i funksionit logout
+function logout() {
+  localStorage.removeItem("token");
+  axios.defaults.headers.common["Authorization"] = undefined;
+}
