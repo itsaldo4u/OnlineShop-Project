@@ -74,8 +74,14 @@ const AdminDashboard = () => {
         )}
       </div>
 
-      <div className="flex-grow-1 bg-light">
-        <div className="bg-white shadow-sm p-3 border-bottom">
+      <div
+        className="flex-grow-1"
+        style={{
+          background:
+            "linear-gradient(135deg,rgb(209, 209, 218) 0%,rgb(76, 107, 155) 100%)",
+        }}
+      >
+        <div className="bg-dark shadow-sm p-3 border-bottom">
           <h4 className="mb-0">
             {activeTab === "dashboard" && "Menaxhimi i Produkteve"}
             {activeTab === "users" && "Menaxhimi i Përdoruesve"}
@@ -87,15 +93,20 @@ const AdminDashboard = () => {
         </div>
 
         {/* Content Area */}
-        <div className="p-4">
+        <div className="p-4d">
           {activeTab === "dashboard" && (
-            <div className="bg-white rounded p-4 shadow-sm">
+            <div
+              className=" rounded p-1 shadow-sm"
+              style={{
+                background: "transparent)",
+              }}
+            >
               <ProductTable />
             </div>
           )}
 
           {activeTab === "users" && (
-            <div className="bg-white rounded p-4 shadow-sm">
+            <div className="bg-transparent rounded p-4 shadow-sm">
               <div className="text-center py-4">
                 <i
                   className="bi bi-people text-muted mb-3"
@@ -108,14 +119,14 @@ const AdminDashboard = () => {
           )}
 
           {activeTab === "order" && (
-            <div className="bg-white rounded p-4 shadow-sm">
+            <div className="bg-transparent rounded p-1 shadow-sm">
               <OrderManagement />
             </div>
           )}
 
           {activeTab === "rates" && (
-            <div className="bg-white rounded p-4 shadow-sm">
-              <div className="text-center py-4">
+            <div className="bg-transparent rounded p-4 shadow-sm">
+              <div className="text-center py-1">
                 <i
                   className="bi bi-star-half text-muted mb-3"
                   style={{ fontSize: "3rem" }}
@@ -127,8 +138,13 @@ const AdminDashboard = () => {
           )}
 
           {activeTab === "raport" && (
-            <div className="bg-white rounded p-4 shadow-sm">
-              <div className="text-center py-4">
+            <div
+              className=" rounded p-4 shadow-sm"
+              style={{
+                background: "transparent",
+              }}
+            >
+              <div className="text-center py-1">
                 <i
                   className="bi bi-graph-up text-muted mb-3"
                   style={{ fontSize: "3rem" }}
@@ -140,8 +156,13 @@ const AdminDashboard = () => {
           )}
 
           {!activeTab && (
-            <div className="bg-white rounded p-4 shadow-sm">
-              <div className="text-center py-5">
+            <div
+              className=" rounded p-4 shadow-sm"
+              style={{
+                background: "transparent)",
+              }}
+            >
+              <div className="text-center py-1">
                 <i
                   className="bi bi-speedometer2 text-primary mb-3"
                   style={{ fontSize: "4rem" }}
@@ -156,7 +177,11 @@ const AdminDashboard = () => {
                     <div key={tab.id} className="col-md-6 col-lg-4 mb-3">
                       <div
                         className="card h-100 border-0 shadow-sm"
-                        style={{ cursor: "pointer" }}
+                        style={{
+                          cursor: "pointer",
+                          background:
+                            "linear-gradient(135deg,rgb(226, 226, 229) 0%,rgb(76, 107, 155) 100%)",
+                        }}
                         onClick={() => setActiveTab(tab.id)}
                       >
                         <div className="card-body text-center">

@@ -12,6 +12,35 @@ type Users = {
   name: string;
   email: string;
   password: string;
+=======
+type Customer = {
+  [x: string]: any;
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  city: string;
+  zipCode: string;
+  country: string;
+};
+
+type Product = {
+  id: string;
+  title: string;
+  price: string;
+  img: string;
+  quantity: number;
+};
+
+export type OrderStatus = "pending" | "confirmed" | "shipped" | "delivered";
+
+export type Order = {
+  id: string;
+  customer: Customer;
+  products: Product[];
+  date: string;
+  status: OrderStatus;
+  [key: string]: any;
 };
 
 type Contact = {
@@ -56,6 +85,18 @@ type AppContextType = {
   updateProduct: (updated: ProductData) => Promise<void>;
   currentUser: Users | null;
   setCurrentUser: (user: Users | null) => void;
+=======
+  order: Order[];
+  fetchContacts: () => Promise<void>;
+  fetchProductData: () => Promise<void>;
+  fetchOrder: () => Promise<void>;
+  deleteProduct: (id: string) => Promise<void>;
+  addProduct: (product: ProductData) => Promise<void>;
+  updateProduct: (updated: ProductData) => Promise<void>;
+  addOrder: (order: Order) => Promise<void>;
+  deleteOrder: (id: string) => Promise<void>;
+  updateOrderStatus: (id: string, status: OrderStatus) => Promise<void>;
+  updateOrder: (id: string, updatedOrder: Order) => Promise<void>;
 };
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -66,6 +107,17 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [Rating, setUserRating] = useState<Rating[]>([]);
   const [Users, setUsers] = useState<Users[]>([]);
   const [_currentUser, _setCurrentUser] = useState<Users | null>(null);
+
+  const [order, setOrder] = useState<Order[]>([]);
+
+  const fetchOrder = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/order");
+      setOrder(response.data);
+    } catch (error) {
+      console.error("Gabim me datat e Order", error);
+    }
+  };
 
   const fetchContacts = async () => {
     try {
@@ -163,17 +215,60 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const addOrder = async (newOrder: Order) => {
+    try {
+      await axios.post("http://localhost:3000/order", newOrder);
+      await fetchOrder();
+    } catch (err) {
+      console.error("Gabim gjatë shtimit të porosisë:", err);
+    }
+  };
+
+  const deleteOrder = async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:3000/order/${id}`);
+      await fetchOrder();
+    } catch (err) {
+      console.error("Gabim gjatë fshirjes së porosisë:", err);
+    }
+  };
+
+  const updateOrder = async (id: string, updatedOrder: Order) => {
+    try {
+      await axios.put(`http://localhost:3000/order/${id}`, updatedOrder);
+      await fetchOrder();
+    } catch (err) {
+      console.error("Gabim gjatë përditësimit të porosisë:", err);
+    }
+  };
+
+  const updateOrderStatus = async (id: string, status: OrderStatus) => {
+    try {
+      const existingOrder = order.find((o) => o.id === id);
+      if (!existingOrder) return;
+
+      const updatedOrder = { ...existingOrder, status };
+
+      await axios.put(`http://localhost:3000/order/${id}`, updatedOrder);
+      await fetchOrder();
+    } catch (err) {
+      console.error("Gabim gjatë përditësimit të statusit të porosisë:", err);
+    }
+  };
+
   useEffect(() => {
     fetchContacts();
     fetchProductData();
     fetchUsers();
     fetchRatings(); // Shtohet për të marrë vlerësimet në fillim
+    fetchOrder();
   }, []);
 
   return (
     <AppContext.Provider
       value={{
         Users,
+        order,
         contacts,
         productdata,
         Rating,
@@ -186,6 +281,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         updateRating,
         currentUser: _currentUser,
         setCurrentUser,
+
+        fetchOrder,
+        deleteProduct,
+        addProduct,
+        updateProduct,
+        addOrder,
+        deleteOrder,
+        updateOrderStatus,
+        updateOrder,
       }}
     >
       {children}
