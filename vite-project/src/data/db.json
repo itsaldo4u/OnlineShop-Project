@@ -1,4 +1,36 @@
 {
+  "users": [
+    {
+      "id": "1",
+      "email": "test@example.com",
+      "password": "123456"
+    },
+    {
+      "id": "c11f",
+      "name": "aldo",
+      "email": "a@gmail.com",
+      "password": "124",
+      "role": "admin"
+    },
+    {
+      "id": "1a83",
+      "name": "elgi",
+      "email": "elgiallmuca@gmail.com",
+      "password": "444"
+    },
+    {
+      "id": "fdb7",
+      "name": "elgi",
+      "email": "allmucaelgi2@gmail.com",
+      "password": "333"
+    },
+    {
+      "id": "4661",
+      "name": "ersi",
+      "email": "ersidomi@gmail.com",
+      "password": "123456"
+    }
+  ],
   "data": [
     {
       "id": "64a5",
@@ -221,6 +253,140 @@
       "rating": 5,
       "discount": "15",
       "isNew": true
+    }
+  ],
+  "rating": [
+    {
+      "id": "r1",
+      "productId": "p1",
+      "userId": "1a83",
+      "rating": 5
+    },
+    {
+      "id": "r2",
+      "productId": "p2",
+      "userId": "c11f",
+      "rating": 3
+    },
+    {
+      "id": "r3",
+      "productId": "p3",
+      "userId": "1",
+      "rating": 4
+    },
+    {
+      "id": "r4",
+      "productId": "p1",
+      "userId": "1",
+      "rating": 4
+    },
+    {
+      "id": "r5",
+      "productId": "p2",
+      "userId": "1a83",
+      "rating": 2
+    },
+    {
+      "id": "r6",
+      "productId": "p4",
+      "userId": "1",
+      "rating": 5
+    },
+    {
+      "id": "p1",
+      "rating": 5
+    },
+    {
+      "id": "p1",
+      "rating": 3
+    },
+    {
+      "id": "p1",
+      "rating": 4
+    },
+    {
+      "id": "p1",
+      "rating": 5
+    },
+    {
+      "id": "p1",
+      "rating": 4
+    },
+    {
+      "id": "p1",
+      "rating": 3
+    },
+    {
+      "id": "p1",
+      "rating": 3
+    },
+    {
+      "id": "p2",
+      "rating": 2
+    },
+    {
+      "id": "p3",
+      "rating": 5
+    },
+    {
+      "id": "9ak86u04a",
+      "rating": 5
+    },
+    {
+      "id": "9ak86u04a",
+      "rating": 1
+    },
+    {
+      "id": "9ak86u04a",
+      "rating": 2
+    },
+    {
+      "id": "p7",
+      "rating": 5
+    },
+    {
+      "id": "p7",
+      "rating": 4
+    },
+    {
+      "id": "p7",
+      "rating": 5
+    },
+    {
+      "id": "p8",
+      "rating": 5
+    },
+    {
+      "id": "p8",
+      "rating": 3
+    },
+    {
+      "id": "9ak86u04a",
+      "rating": 5
+    },
+    {
+      "id": "9ak86u04a",
+      "rating": 2
+    },
+    {
+      "id": "p8",
+      "rating": 4
+    },
+    {
+      "id": "p7",
+      "rating": 4
+    },
+    {
+      "id": "p1",
+      "rating": 5
+    },
+    {
+      "id": "p2",
+      "rating": 1
+    },
+    {
+      "id": "p1",
+      "rating": 5
     }
   ]
 }

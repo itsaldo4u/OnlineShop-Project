@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./ProductCard.css";
+import axios from "axios";
 
 type ProductCardProps = {
   id: string;
@@ -16,6 +17,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({
+  id,
   img,
   title,
   description,
@@ -31,53 +33,72 @@ export default function ProductCard({
   const [isBtnHovered, setIsBtnHovered] = useState(false);
   const [btnAnimation, setBtnAnimation] = useState("");
 
-  // Funksion për krijimin e yjeve bazuar në rating
-  const renderStars = (rating: number) => {
+  const [userRating, setUserRating] = useState<number | null>(null);
+  const [currentRating, setCurrentRating] = useState(rating);
+  const [hoveredStar, setHoveredStar] = useState<number | null>(null);
+  const [loadingRating, setLoadingRating] = useState(false);
+  const [errorRating, setErrorRating] = useState<string | null>(null);
+
+  const handleRatingClick = async (newRating: number) => {
+    setLoadingRating(true);
+    setErrorRating(null);
+    try {
+      await axios.post(`http://localhost:3000/rating`, {
+        id,
+        rating: newRating,
+      });
+      setUserRating(newRating);
+      setCurrentRating(newRating);
+    } catch (error) {
+      setErrorRating("Nuk u ruajt ratingu në server.");
+    } finally {
+      setLoadingRating(false);
+    }
+  };
+
+  const renderStars = (rate: number, interactive = false) => {
     const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 >= 0.5;
 
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(
-        <span key={`star-full-${i}`} className="star-full" aria-hidden="true">
-          ★
-        </span>
-      );
-    }
+    for (let i = 1; i <= 5; i++) {
+      let className = "star";
+      if (hoveredStar !== null) {
+        className += i <= hoveredStar ? " star-hover" : "";
+      } else {
+        className += i <= rate ? " star-selected" : "";
+      }
 
-    if (hasHalfStar) {
       stars.push(
-        <span key="star-half" className="star-half" aria-hidden="true">
-          ★
-        </span>
-      );
-    }
-
-    const emptyStars = 5 - stars.length;
-    for (let i = 0; i < emptyStars; i++) {
-      stars.push(
-        <span key={`star-empty-${i}`} className="star-empty" aria-hidden="true">
+        <span
+          key={i}
+          className={className}
+          style={{ cursor: interactive ? "pointer" : "default" }}
+          onMouseEnter={() => interactive && setHoveredStar(i)}
+          onMouseLeave={() => interactive && setHoveredStar(null)}
+          onClick={() => interactive && handleRatingClick(i)}
+          aria-label={interactive ? `Jep rating ${i}` : undefined}
+          role={interactive ? "button" : undefined}
+          tabIndex={interactive ? 0 : -1}
+          onKeyDown={(e) => {
+            if (interactive && (e.key === "Enter" || e.key === " ")) {
+              handleRatingClick(i);
+            }
+          }}
+        >
           ★
         </span>
       );
     }
 
     return (
-      <div
-        className="star-wrapper"
-        aria-label={`Vlerësimi: ${rating.toFixed(1)} nga 5`}
-      >
+      <div className="star-wrapper" aria-label={`Rating: ${rate.toFixed(1)}`}>
         {stars}
-        <span className="star-rating">({rating.toFixed(1)})</span>
+        <span className="star-rating">({rate.toFixed(1)})</span>
       </div>
     );
   };
 
-  // Llogarit çmimin "original" (pa zbritje) nëse ka discount në %
   const getOriginalPrice = () => {
     if (!discount) return null;
-
-    // Nëse discount është në format % (p.sh "20%")
     if (discount.includes("%")) {
       const discountPercent = parseFloat(discount.replace("%", ""));
       const numericPrice = parseFloat(price.replace(/[^0-9.]/g, ""));
@@ -86,7 +107,6 @@ export default function ProductCard({
         return original.toFixed(2) + "€";
       }
     }
-    // Nëse discount është absolute, ose nuk mund ta llogarisim originalin, mund ta mos shfaqim
     return null;
   };
 
@@ -105,13 +125,11 @@ export default function ProductCard({
       tabIndex={0}
     >
       <div className="card-accent" aria-hidden="true" />
-
       {discount && (
         <div className="discount-badge" aria-label={`Zbritje: ${discount}`}>
           {discount}
         </div>
       )}
-
       <div className="image-container">
         <img
           src={img}
@@ -130,9 +148,12 @@ export default function ProductCard({
 
       <div className="card-content">
         <h3 className="product-title">{title}</h3>
-        {renderStars(rating)}
+        <div aria-label="Vlerësimi i produktit" style={{ marginBottom: "8px" }}>
+          {renderStars(currentRating, true)}
+        </div>
+        {loadingRating && <p>Po ruhet vlerësimi...</p>}
+        {errorRating && <p style={{ color: "red" }}>{errorRating}</p>}
         <p className="product-description">{description}</p>
-
         <div className="tag-box" aria-label="Kategoritë e produktit">
           <ul>
             {tags.slice(0, 3).map((tag, i) => (
