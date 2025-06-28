@@ -63,7 +63,7 @@
       "img": "men-skin-care.jpg",
       "title": "Cleanser Amino Men",
       "description": "Formula me aminoacide pastron pa e tharë lëkurën.",
-      "price": "€24.99",
+      "price": "24.99",
       "tags": [
         "Pastrim i thellë",
         "Hidratim dhe freski",
@@ -83,7 +83,7 @@
       "img": "krem.webp",
       "title": "Krem Hidratues",
       "description": "Krem i pasur me vitamina për fytyrë të shëndetshme.",
-      "price": "€19.99",
+      "price": "19.99",
       "tags": [
         "Hidratim",
         "Mbrojtje UV",
@@ -101,7 +101,7 @@
       "img": "shampo.jpg",
       "title": "Shampo Bimore",
       "description": "Shampo pa sulfate me përbërës natyralë.",
-      "price": "€14.99",
+      "price": "14.99",
       "tags": [
         "Pa sulfate",
         "Fortësim flokësh",
@@ -120,7 +120,7 @@
       "img": "vaj.webp",
       "title": "Serum për mjekër",
       "description": "Rritje dhe mbushje e qimeve të mjekrës me 100% vaj natyral.",
-      "price": "€22.49",
+      "price": "22.49",
       "tags": [
         "Rritje natyrale",
         "Vitaminë E",
@@ -138,7 +138,7 @@
       "img": "naturalskincare.jpg",
       "title": "Scrub Fytyre",
       "description": "Eksfoliues i butë për lëkurë të freskët dhe të pastër.",
-      "price": "€16.99",
+      "price": "16.99",
       "tags": [
         "Hiq qelizat e vdekura",
         "Butësi",
@@ -155,7 +155,7 @@
       "img": "care products.jpg",
       "title": "Locion Trupi",
       "description": "Locion i lehtë me përbërës hidratues për lëkurë të butë.",
-      "price": "€12.99",
+      "price": "12.99",
       "tags": [
         "Lëkurë më e butë",
         "Aromë relaksuese",
@@ -174,7 +174,7 @@
       "img": "public/JeanPaul.png",
       "title": "Jean Paul Gaultier Le Male",
       "description": "Parfum ikonik me nota vanilje, nenexhik dhe lavandë për një aromë të parezistueshme dhe elegante.",
-      "price": "€59.99",
+      "price": "59.99",
       "tags": [
         "Aromë e qëndrueshme",
         "Për meshkuj",
@@ -191,7 +191,7 @@
       "img": "burberry.jpeg",
       "title": "Burberry Hero",
       "description": "Parfum i guximshëm dhe modern me nota druri, kedri dhe bergamoti për një stil të fuqishëm dhe të sofistikuar.",
-      "price": "€69.99",
+      "price": "69.99",
       "tags": [
         "Aromë drunore",
         "Stil modern",
@@ -203,24 +203,83 @@
       "rating": 4.7,
       "discount": "10% OFF",
       "isNew": false
+    }
+  ],
+  "order": [
+    {
+      "id": "99a9",
+      "customer": {
+        "firstName": "Lamine",
+        "lastName": "Yamal",
+        "email": "lamine@gmail.com",
+        "address": "PPOD",
+        "city": "Bathore,Kamez",
+        "zipCode": "1001",
+        "country": "Albania",
+        "phoneNumber": "0696969696"
+      },
+      "products": [
+        {
+          "id": "PRD1750675151189",
+          "title": "Hydrating Cream",
+          "price": "19.99",
+          "img": "hydrating-cream.jpg",
+          "quantity": 6
+        }
+      ],
+      "date": "2025-06-23T10:39:11.189Z",
+      "status": "confirmed"
     },
     {
-      "id": "9ak86u04a",
-      "img": "JeanPaul.png",
-      "title": "Aldo",
-      "description": "programues front-end development",
-      "price": "25",
-      "tags": [
-        "programer",
-        "digital",
-        "marketing"
+      "id": "ORD1750580213584",
+      "customer": {
+        "firstName": "aldo",
+        "lastName": "mecani",
+        "email": "aldo@mail.com",
+        "address": "tirane",
+        "city": "tirane",
+        "zipCode": "1001",
+        "country": "Albania",
+        "phoneNumber": "0696969696"
+      },
+      "products": [
+        {
+          "id": "PRD1750676481902",
+          "title": "Scrub Fytyre",
+          "price": "16.99",
+          "img": "naturalskincare.jpg",
+          "quantity": 1
+        }
       ],
-      "filterTags": [
-        "pastrim"
+      "date": "2025-06-23T11:01:21.902Z",
+      "status": "pending"
+    },
+    {
+      "id": "ORD1750672253312",
+      "customer": {
+        "firstName": "agron",
+        "lastName": "mecani",
+        "email": "aldo@mail.com",
+        "address": "tirane",
+        "city": "tirane",
+        "zipCode": "1001",
+        "country": "shqipri",
+        "phoneNumber": "0696969696"
+      },
+      "products": [
+        {
+          "id": "PRD1750676493942",
+          "title": "Krem Hidratues",
+          "price": "19.99",
+          "img": "krem.webp",
+          "quantity": 1
+        }
       ],
-      "rating": 5,
-      "discount": "15",
-      "isNew": true
+      "date": "2025-06-23T11:01:33.942Z",
+      "status": "pending"
     }
+  ],
+  "rating": [
+    {}
   ]
 }
