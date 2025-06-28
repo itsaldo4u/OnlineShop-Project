@@ -12,7 +12,7 @@ type Users = {
   name: string;
   email: string;
   password: string;
-=======
+};
 type Customer = {
   [x: string]: any;
   firstName: string;
@@ -76,16 +76,11 @@ type AppContextType = {
   contacts: Contact[];
   productdata: ProductData[];
   Rating: Rating[];
-  fetchContacts: () => Promise<void>;
-  fetchProductData: () => Promise<void>;
   updateRating: (id: string, rating: number) => Promise<void>;
   fetchUsers: () => Promise<void>;
-  deleteProduct: (id: string) => Promise<void>;
-  addProduct: (product: ProductData) => Promise<void>;
-  updateProduct: (updated: ProductData) => Promise<void>;
   currentUser: Users | null;
   setCurrentUser: (user: Users | null) => void;
-=======
+
   order: Order[];
   fetchContacts: () => Promise<void>;
   fetchProductData: () => Promise<void>;
@@ -283,9 +278,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         setCurrentUser,
 
         fetchOrder,
-        deleteProduct,
-        addProduct,
-        updateProduct,
+
         addOrder,
         deleteOrder,
         updateOrderStatus,
