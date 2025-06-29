@@ -1,5 +1,4 @@
-// src/componentes/admin/ProductForm.tsx
-import { useState, useEffect } from "react"; // Shto useEffect
+import { useState, useEffect } from "react";
 import { ProductData } from "../../context/AppContext";
 import { XCircle, Save } from "lucide-react";
 
@@ -25,31 +24,23 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
     }
   );
 
-  // State të veçantë për vlerat e papërpunuara të inputeve të tags
-  // Kjo siguron që presja të shfaqet menjëherë.
   const [rawTagsInput, setRawTagsInput] = useState<string>(
     formData.tags.join(", ")
   );
   const [rawFilterTagsInput, setRawFilterTagsInput] = useState<string>(
     formData.filterTags.join(", ")
   );
-
-  // State për mesazhet e gabimit për tags/filterTags
   const [tagError, setTagError] = useState<string | null>(null);
   const [filterTagError, setFilterTagError] = useState<string | null>(null);
-
-  // Përdor useEffect për të sinkronizuar rawTagsInput me formData.tags
-  // Kur editohet një produkt ekzistues.
   useEffect(() => {
     if (product) {
       setRawTagsInput(product.tags.join(", "));
       setRawFilterTagsInput(product.filterTags.join(", "));
     } else {
-      // Nëse shtohet një produkt i ri, pastro fushat
       setRawTagsInput("");
       setRawFilterTagsInput("");
     }
-    // Gjithashtu pastro gabimet kur ndryshon produkti (p.sh. nga edit në add)
+
     setTagError(null);
     setFilterTagError(null);
   }, [product]);
@@ -60,34 +51,27 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
     const { name, value, checked, type } = e.target as HTMLInputElement;
 
     if (name === "tags" || name === "filterTags") {
-      // Përditëso state-in e inputit të papërpunuar menjëherë
       if (name === "tags") {
         setRawTagsInput(value);
       } else {
         setRawFilterTagsInput(value);
       }
 
-      // Pastro mesazhet e gabimit kur ndryshon inputi
       if (name === "tags") setTagError(null);
       if (name === "filterTags") setFilterTagError(null);
 
-      // Nda fjalët sipas presjes, pastro hapësirat, dhe filtro boshllëqet
       const currentTags = value
         .split(",")
         .map((t) => t.trim())
         .filter((t) => t !== "");
 
-      // Kufizimi në maksimumi 3 fjalë
       if (currentTags.length > 3) {
         if (name === "tags") {
           setTagError("Maksimumi 3 etiketa lejohen.");
         } else {
           setFilterTagError("Maksimumi 3 etiketa filtri lejohen.");
         }
-        // Nuk ndryshojmë formData-n këtu nëse ka gabim, por lejojmë inputin të shfaqë çfarëdo që shkruhet
-        // Nënkupton që validimi final do të bëhet në handleSubmit
       } else {
-        // Përditëso formData vetëm nëse numri i etiketave është i vlefshëm
         setFormData((prevData) => ({
           ...prevData,
           [name]: currentTags,
@@ -114,8 +98,6 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Rifresko vlerat e tags/filterTags në formData nga raw input para se të validosh
-    // Kjo siguron që formData të ketë vlerat aktuale para ruajtjes
     const finalTags = rawTagsInput
       .split(",")
       .map((t) => t.trim())
@@ -127,14 +109,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
 
     if (finalTags.length > 3) {
       setTagError("Maksimumi 3 etiketa lejohen.");
-      return; // Ndalon dërgimin e formës
+      return;
     }
     if (finalFilterTags.length > 3) {
       setFilterTagError("Maksimumi 3 etiketa filtri lejohen.");
-      return; // Ndalon dërgimin e formës
+      return;
     }
 
-    // Përditëso formData me vlerat finale të etiketave para ruajtjes
     const dataToSave = {
       ...formData,
       tags: finalTags,

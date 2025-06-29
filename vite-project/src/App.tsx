@@ -10,6 +10,7 @@ import LoginPage from "./componentes/login/Login";
 import SignUpPage from "./componentes/login/Signup";
 import AdminDashboard from "./componentes/admin/AdminDashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CheckoutStepper from "./componentes/products/CheckoutStepper";
 
 export default function App() {
   return (
@@ -24,8 +25,8 @@ export default function App() {
             <Route path="products" element={<ProductList />} />
             <Route path="admindashboard" element={<AdminDashboard />} />
             <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignUpPage/>} />
-
+            <Route path="signup" element={<SignUpPage />} />
+            <Route path="/checkout" element={<CheckoutStepper />} />
           </Route>
         </Routes>
       </div>

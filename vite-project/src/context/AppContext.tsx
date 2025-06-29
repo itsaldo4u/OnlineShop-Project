@@ -12,6 +12,7 @@ type Users = {
   name: string;
   email: string;
   password: string;
+  role: "admin" | "user";
 };
 type Customer = {
   [x: string]: any;
@@ -80,6 +81,8 @@ type AppContextType = {
   fetchUsers: () => Promise<void>;
   currentUser: Users | null;
   setCurrentUser: (user: Users | null) => void;
+  deleteUser: (id: number) => Promise<void>;
+  updateUserRole: (id: number, role: "admin" | "user") => Promise<void>;
 
   order: Order[];
   fetchContacts: () => Promise<void>;
@@ -250,12 +253,29 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       console.error("Gabim gjatë përditësimit të statusit të porosisë:", err);
     }
   };
+  const deleteUser = async (id: number) => {
+    try {
+      await axios.delete(`http://localhost:3000/users/${id}`);
+      await fetchUsers();
+    } catch (err) {
+      console.error("Gabim gjatë fshirjes së përdoruesit:", err);
+    }
+  };
+
+  const updateUserRole = async (id: number, role: "admin" | "user") => {
+    try {
+      await axios.patch(`http://localhost:3000/users/${id}`, { role });
+      await fetchUsers();
+    } catch (err) {
+      console.error("Gabim gjatë përditësimit të rolit:", err);
+    }
+  };
 
   useEffect(() => {
     fetchContacts();
     fetchProductData();
     fetchUsers();
-    fetchRatings(); // Shtohet për të marrë vlerësimet në fillim
+    fetchRatings();
     fetchOrder();
   }, []);
 
@@ -283,6 +303,8 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         deleteOrder,
         updateOrderStatus,
         updateOrder,
+        deleteUser,
+        updateUserRole,
       }}
     >
       {children}

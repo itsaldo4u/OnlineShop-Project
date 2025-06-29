@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductTable from "./ProductTable";
 import OrderManagement from "./OrderMenagment";
-
+import UsersTable from "./UserTable";
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("");
   const [showTabs, setShowTabs] = useState(false);
@@ -107,14 +107,7 @@ const AdminDashboard = () => {
 
           {activeTab === "users" && (
             <div className="bg-transparent rounded p-4 shadow-sm">
-              <div className="text-center py-4">
-                <i
-                  className="bi bi-people text-muted mb-3"
-                  style={{ fontSize: "3rem" }}
-                ></i>
-                <h5>Menaxhimi i Përdoruesve</h5>
-                <p className="text-muted">Përdoruesit do shfaqen këtu.</p>
-              </div>
+              <UsersTable />
             </div>
           )}
 
