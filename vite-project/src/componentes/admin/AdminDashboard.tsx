@@ -2,6 +2,7 @@ import { useState } from "react";
 import ProductTable from "./ProductTable";
 import OrderManagement from "./OrderMenagment";
 import UsersTable from "./UserTable";
+import Raport from "./Raport";
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("");
   const [showTabs, setShowTabs] = useState(false);
@@ -137,14 +138,7 @@ const AdminDashboard = () => {
                 background: "transparent",
               }}
             >
-              <div className="text-center py-1">
-                <i
-                  className="bi bi-graph-up text-muted mb-3"
-                  style={{ fontSize: "3rem" }}
-                ></i>
-                <h5>Raportet</h5>
-                <p className="text-muted">Raportet do shfaqen këtu.</p>
-              </div>
+              <Raport />
             </div>
           )}
 

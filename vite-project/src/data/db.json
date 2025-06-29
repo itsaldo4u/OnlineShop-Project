@@ -44,6 +44,13 @@
       "email": "ersi@gmail.com",
       "password": "123ersi",
       "role": "user"
+    },
+    {
+      "id": "0bbc",
+      "name": "ersi",
+      "email": "ers@gmail.com",
+      "password": "123ersi",
+      "role": "user"
     }
   ],
   "data": [
@@ -489,6 +496,75 @@
         }
       ],
       "date": "2025-06-29T09:17:34.425Z",
+      "status": "pending"
+    },
+    {
+      "id": "fbbf",
+      "customer": {
+        "firstName": "ersi",
+        "lastName": "domi",
+        "email": "ersi@gmail.com",
+        "address": "2334",
+        "city": "tirsne",
+        "zipCode": "1001",
+        "country": "alb"
+      },
+      "products": [
+        {
+          "id": "p2",
+          "title": "Krem Hidratues",
+          "price": "19.99",
+          "img": "krem.webp",
+          "quantity": 1
+        }
+      ],
+      "date": "2025-06-29T10:08:00.937Z",
+      "status": "pending"
+    },
+    {
+      "id": "a349",
+      "customer": {
+        "firstName": "ersi",
+        "lastName": "domi",
+        "email": "ersi@gmail.com",
+        "address": "123",
+        "city": "1234",
+        "zipCode": "1001",
+        "country": "alb"
+      },
+      "products": [
+        {
+          "id": "p2",
+          "title": "Krem Hidratues",
+          "price": "19.99",
+          "img": "krem.webp",
+          "quantity": 1
+        }
+      ],
+      "date": "2025-06-29T10:11:49.542Z",
+      "status": "pending"
+    },
+    {
+      "id": "f45d",
+      "customer": {
+        "firstName": "aldo",
+        "lastName": "......",
+        "email": "aldoprov@gmail.com",
+        "address": "124",
+        "city": "123",
+        "zipCode": "321",
+        "country": "231"
+      },
+      "products": [
+        {
+          "id": "p2",
+          "title": "Krem Hidratues",
+          "price": "19.99",
+          "img": "krem.webp",
+          "quantity": 1
+        }
+      ],
+      "date": "2025-06-29T11:39:07.058Z",
       "status": "pending"
     }
   ],

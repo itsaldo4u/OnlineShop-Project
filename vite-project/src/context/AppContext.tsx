@@ -8,6 +8,10 @@ import {
 } from "react";
 
 type Users = {
+  order: ReactNode;
+  firstName: ReactNode;
+  lastName: ReactNode;
+  address: ReactNode;
   id: number;
   name: string;
   email: string;
