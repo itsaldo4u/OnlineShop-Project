@@ -12,7 +12,6 @@ export default function AutoplayCarousel() {
   const [touchStart, setTouchStart] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const searchParams = new URLSearchParams(location.search);
-  const query = searchParams.get("q")?.toLowerCase() || "";
 
   const slides = [
     { id: 1, image: img1, alt: "Krem Hidratues", link: "/products?q=krem" },
