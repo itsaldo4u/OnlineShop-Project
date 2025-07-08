@@ -27,6 +27,7 @@ const UserDashboard: React.FC = () => {
     fetchOrders();
   }, []);
 
+  // Fetch user's orders from backend and filter by current user's email (case-insensitive)
   const fetchOrders = async () => {
     try {
       const res = await axios.get(`http://localhost:3000/order`);
@@ -37,10 +38,11 @@ const UserDashboard: React.FC = () => {
       );
       setOrders(userOrders);
     } catch (error) {
-      console.error("Gabim gjatë marrjes së porosive:", error);
+      console.error("Error fetching orders:", error);
     }
   };
 
+  // Save updated user data to backend
   const handleSave = async () => {
     const updatedUser = { ...currentUser, ...formData };
     try {
@@ -51,7 +53,7 @@ const UserDashboard: React.FC = () => {
       setCurrentUser(updatedUser);
       setShowModal(false);
     } catch (error) {
-      console.error("Gabim gjatë ruajtjes së të dhënave:", error);
+      console.error("Error saving data:", error);
     }
   };
 
@@ -66,17 +68,15 @@ const UserDashboard: React.FC = () => {
           <div className="card shadow-sm mb-4 border-0">
             <div className="card-body p-4 d-flex justify-content-between align-items-center">
               <div>
-                <h2 className="card-title mb-2 text-dark fw-bold">
-                  Përdoruesi
-                </h2>
-                <p className="card-text text-muted mb-0">Të dhënat e mia</p>
+                <h2 className="card-title mb-2 text-dark fw-bold">User</h2>
+                <p className="card-text text-muted mb-0">My Information</p>
               </div>
               <div>
                 <button
                   onClick={() => setShowModal(true)}
                   className="btn btn-outline-primary"
                 >
-                  Ndrysho
+                  Edit
                 </button>
                 <button
                   onClick={() => {
@@ -85,7 +85,7 @@ const UserDashboard: React.FC = () => {
                   }}
                   className="btn btn-danger ms-2"
                 >
-                  Dil
+                  Logout
                 </button>
               </div>
             </div>
@@ -95,13 +95,13 @@ const UserDashboard: React.FC = () => {
           <div className="card shadow-sm border-0 mb-4">
             <div className="card-body">
               <p>
-                <strong>Emri:</strong> {currentUser.name}
+                <strong>Name:</strong> {currentUser.name}
               </p>
               <p>
                 <strong>Email:</strong> {currentUser.email}
               </p>
               <p>
-                <strong>Roli:</strong> {currentUser.role}
+                <strong>Role:</strong> {currentUser.role}
               </p>
             </div>
           </div>
@@ -109,19 +109,19 @@ const UserDashboard: React.FC = () => {
           {/* Orders Section */}
           <div className="card shadow-sm border-0">
             <div className="card-body">
-              <h4 className="fw-bold mb-3">Porositë e mia</h4>
+              <h4 className="fw-bold mb-3">My Orders</h4>
               {orders.length === 0 ? (
-                <p className="text-muted">Nuk ka porosi të regjistruara.</p>
+                <p className="text-muted">No orders recorded.</p>
               ) : (
                 <div className="table-responsive">
                   <table className="table table-bordered table-striped">
                     <thead className="table-light">
                       <tr>
                         <th>ID</th>
-                        <th>Data</th>
-                        <th>Statusi</th>
-                        <th>Produkte</th>
-                        <th>Totali</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Products</th>
+                        <th>Total</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -172,9 +172,7 @@ const UserDashboard: React.FC = () => {
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content border-0 shadow">
                 <div className="modal-header bg-primary text-white border-0">
-                  <h5 className="modal-title fw-semibold">
-                    Ndrysho Përdoruesin
-                  </h5>
+                  <h5 className="modal-title fw-semibold">Edit User</h5>
                   <button
                     type="button"
                     className="btn-close btn-close-white"
@@ -184,7 +182,7 @@ const UserDashboard: React.FC = () => {
                 <div className="modal-body p-4">
                   <div className="mb-3">
                     <label className="form-label fw-semibold text-dark">
-                      Emri
+                      Name
                     </label>
                     <input
                       type="text"
@@ -210,7 +208,7 @@ const UserDashboard: React.FC = () => {
                   </div>
                   <div className="mb-3">
                     <label className="form-label fw-semibold text-dark">
-                      Fjalëkalimi
+                      Password
                     </label>
                     <input
                       type="password"
@@ -227,10 +225,10 @@ const UserDashboard: React.FC = () => {
                     className="btn btn-outline-secondary"
                     onClick={() => setShowModal(false)}
                   >
-                    Anulo
+                    Cancel
                   </button>
                   <button className="btn btn-primary" onClick={handleSave}>
-                    Ruaj
+                    Save
                   </button>
                 </div>
               </div>

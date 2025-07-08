@@ -1,18 +1,20 @@
 import { useState } from "react";
 import ProductTable from "./ProductTable";
-import OrderManagement from "./OrderMenagment";
+import OrderMenagment from "./OrderMenagment";
 import UsersTable from "./UserTable";
 import Raport from "./Raport";
+import RatingsTable from "./RatingForm";
+
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("");
   const [showTabs, setShowTabs] = useState(false);
 
   const tabs = [
-    { id: "dashboard", label: "Produkte", icon: "bi bi-box-seam" },
-    { id: "users", label: "Përdoruesit", icon: "bi bi-people" },
-    { id: "order", label: "Porosit", icon: "bi bi-bag-check" },
-    { id: "rates", label: "Vlerësimi", icon: "bi bi-star-half" },
-    { id: "raport", label: "Raporti", icon: "bi bi-graph-up" },
+    { id: "dashboard", label: "Products", icon: "bi bi-box-seam" },
+    { id: "users", label: "Users", icon: "bi bi-people" },
+    { id: "order", label: "Orders", icon: "bi bi-bag-check" },
+    { id: "rates", label: "Ratings", icon: "bi bi-star-half" },
+    { id: "raport", label: "Report", icon: "bi bi-graph-up" },
   ];
 
   return (
@@ -79,16 +81,16 @@ const AdminDashboard = () => {
         className="flex-grow-1"
         style={{
           background:
-            "linear-gradient(135deg,rgb(209, 209, 218) 0%,rgb(76, 107, 155) 100%)",
+            "linear-gradient(135deg, rgb(209, 209, 218) 0%, rgb(76, 107, 155) 100%)",
         }}
       >
         <div className="bg-dark shadow-sm p-3 border-bottom">
           <h4 className="mb-0">
-            {activeTab === "dashboard" && "Menaxhimi i Produkteve"}
-            {activeTab === "users" && "Menaxhimi i Përdoruesve"}
-            {activeTab === "order" && "Menaxhimi i Porosive"}
-            {activeTab === "rates" && "Vlerësimet"}
-            {activeTab === "raport" && "Raportet"}
+            {activeTab === "dashboard" && "Product Management"}
+            {activeTab === "users" && "User Management"}
+            {activeTab === "order" && "Order Management"}
+            {activeTab === "rates" && "Ratings"}
+            {activeTab === "raport" && "Reports"}
             {!activeTab && "Admin Dashboard"}
           </h4>
         </div>
@@ -99,7 +101,7 @@ const AdminDashboard = () => {
             <div
               className=" rounded p-1 shadow-sm"
               style={{
-                background: "transparent)",
+                background: "transparent",
               }}
             >
               <ProductTable />
@@ -114,20 +116,13 @@ const AdminDashboard = () => {
 
           {activeTab === "order" && (
             <div className="bg-transparent rounded p-1 shadow-sm">
-              <OrderManagement />
+              <OrderMenagment />
             </div>
           )}
 
           {activeTab === "rates" && (
             <div className="bg-transparent rounded p-4 shadow-sm">
-              <div className="text-center py-1">
-                <i
-                  className="bi bi-star-half text-muted mb-3"
-                  style={{ fontSize: "3rem" }}
-                ></i>
-                <h5>Vlerësimet</h5>
-                <p className="text-muted">Vlerësimi do shfaqet këtu.</p>
-              </div>
+              <RatingsTable />
             </div>
           )}
 
@@ -146,7 +141,7 @@ const AdminDashboard = () => {
             <div
               className=" rounded p-4 shadow-sm"
               style={{
-                background: "transparent)",
+                background: "transparent",
               }}
             >
               <div className="text-center py-1">
@@ -154,9 +149,9 @@ const AdminDashboard = () => {
                   className="bi bi-speedometer2 text-primary mb-3"
                   style={{ fontSize: "4rem" }}
                 ></i>
-                <h3>Mirësevini në Admin Dashboard</h3>
+                <h3>Welcome to the Admin Dashboard</h3>
                 <p className="text-muted">
-                  Zgjidhni një seksion nga menuja për të filluar.
+                  Select a section from the menu to get started.
                 </p>
 
                 <div className="row mt-4">
@@ -167,7 +162,7 @@ const AdminDashboard = () => {
                         style={{
                           cursor: "pointer",
                           background:
-                            "linear-gradient(135deg,rgb(226, 226, 229) 0%,rgb(76, 107, 155) 100%)",
+                            "linear-gradient(135deg, rgb(226, 226, 229) 0%, rgb(76, 107, 155) 100%)",
                         }}
                         onClick={() => setActiveTab(tab.id)}
                       >

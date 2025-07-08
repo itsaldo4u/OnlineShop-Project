@@ -9,9 +9,8 @@ const BasicContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
-  const [submissions, setSubmissions] = useState([]);
+  const [, setSubmissions] = useState([]);
 
-  // Fetch existing contact submissions when component mounts
   useEffect(() => {
     fetchSubmissions();
   }, []);
@@ -31,7 +30,6 @@ const BasicContactPage = () => {
     setError("");
 
     try {
-      // Create new contact message object
       const newContact = {
         id: Date.now(),
         name,
@@ -40,20 +38,17 @@ const BasicContactPage = () => {
         date: new Date().toISOString(),
       };
 
-      // Post to JSON server
       await axios.post("http://localhost:3000/contact", newContact);
 
-      // Update UI
-      setSuccess("Mesazhi u dërgua me sukses!");
+      setSuccess("Message sent successfully!");
       setName("");
       setEmail("");
       setMessage("");
 
-      // Refresh submissions list
       fetchSubmissions();
     } catch (err) {
       console.error("Error submitting form:", err);
-      setError("Ka ndodhur një gabim. Ju lutemi provoni përsëri.");
+      setError("An error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -63,45 +58,45 @@ const BasicContactPage = () => {
     <div className="container">
       {/* Header */}
       <div className="header">
-        <h1>Na Kontaktoni</h1>
-        <p>Ne jemi këtu për t'ju ndihmuar me çdo pyetje që keni.</p>
+        <h1>Contact Us</h1>
+        <p>We are here to help you with any questions you have.</p>
       </div>
 
       <div className="contact-section">
         <div className="content">
           {/* Contact Info */}
           <div className="contact-info">
-            <h2>Informacione Kontakti</h2>
+            <h2>Contact Information</h2>
             <div>
-              <h3>Adresa</h3>
-              <p>Rr. Skenderbeu, Nr 15, Tiranë, Shqipëri</p>
+              <h3>Address</h3>
+              <p>Skenderbeu St, No 15, Tirana, Albania</p>
             </div>
             <div>
               <h3>Email</h3>
-              <p>info@kompania.com</p>
+              <p>info@company.com</p>
             </div>
             <div>
-              <h3>Telefon</h3>
+              <h3>Phone</h3>
               <p>+355 69 123 4567</p>
             </div>
             <div>
-              <h3>Orari i Punës</h3>
-              <p>E Hënë - E Premte: 9:00 - 17:00</p>
-              <p>E Shtunë: 10:00 - 14:00</p>
-              <p>E Dielë: Mbyllur</p>
+              <h3>Working Hours</h3>
+              <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+              <p>Saturday: 10:00 AM - 2:00 PM</p>
+              <p>Sunday: Closed</p>
             </div>
           </div>
 
           {/* Contact Form */}
           <div className="contact-form">
-            <h2>Na dërgoni një mesazh</h2>
+            <h2>Send Us a Message</h2>
 
             {success && <div className="success">{success}</div>}
             {error && <div className="error">{error}</div>}
 
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: "15px" }}>
-                <label className="label">Emri</label>
+                <label className="label">Name</label>
                 <input
                   className="input-field"
                   type="text"
@@ -123,7 +118,7 @@ const BasicContactPage = () => {
               </div>
 
               <div style={{ marginBottom: "15px" }}>
-                <label className="label">Mesazhi</label>
+                <label className="label">Message</label>
                 <textarea
                   className="textarea-field"
                   value={message}
@@ -134,7 +129,7 @@ const BasicContactPage = () => {
               </div>
 
               <button type="submit" disabled={isSubmitting} className="button">
-                {isSubmitting ? "Duke dërguar..." : "Dërgo Mesazhin"}
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
@@ -142,28 +137,26 @@ const BasicContactPage = () => {
 
         {/* FAQ Section */}
         <div className="faq-section">
-          <h2>Pyetje të Shpeshta</h2>
+          <h2>Frequently Asked Questions</h2>
 
           <div className="faq-item">
-            <h3>Sa shpejt do të merrni përgjigje?</h3>
-            <p>
-              Ne synojmë t'ju përgjigjemi brenda 24 orëve gjatë ditëve të punës.
-            </p>
+            <h3>How quickly will I get a response?</h3>
+            <p>We aim to reply within 24 hours on business days.</p>
           </div>
 
           <div className="faq-item">
-            <h3>Si mund të anuloj një porosi?</h3>
+            <h3>How can I cancel an order?</h3>
             <p>
-              Ju mund të anuloni një porosi duke na kontaktuar me email ose
-              telefon brenda 24 orëve nga blerja.
+              You can cancel an order by contacting us via email or phone within
+              24 hours of purchase.
             </p>
           </div>
 
           <div>
-            <h3>A ofron kompania juaj dërgesë të shpejtë?</h3>
+            <h3>Does your company offer fast delivery?</h3>
             <p>
-              Po, ne ofrojmë dërgesë të shpejtë për të gjitha porositë në Tiranë
-              dhe rrethinat e saj.
+              Yes, we offer fast delivery for all orders in Tirana and
+              surrounding areas.
             </p>
           </div>
         </div>

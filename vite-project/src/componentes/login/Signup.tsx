@@ -22,7 +22,7 @@ const SignUpPage = () => {
       const res = await axios.get("http://localhost:3000/users");
       setUsers(res.data);
     } catch (err) {
-      console.error("Gabim gjatë marrjes së përdoruesve:", err);
+      console.error("Error fetching users:", err);
     }
   };
 
@@ -34,7 +34,7 @@ const SignUpPage = () => {
     e.preventDefault();
 
     if (!name || !email || !password) {
-      setMessage("Ju lutem plotësoni të gjitha fushat.");
+      setMessage("Please fill in all fields.");
       return;
     }
     if (
@@ -42,7 +42,7 @@ const SignUpPage = () => {
         (u) => u.email && u.email.toLowerCase() === email.toLowerCase()
       )
     ) {
-      setMessage("Ky email është regjistruar tashmë.");
+      setMessage("This email is already registered.");
       return;
     }
 
@@ -51,21 +51,21 @@ const SignUpPage = () => {
         name,
         email,
         password,
-        role: "user", // Roli i caktohet automatikisht "user"
+        role: "user", // Role is automatically set to "user"
       });
 
       if (res.status === 201) {
-        setMessage("Regjistrimi u krye me sukses!");
+        setMessage("Registration successful!");
         setName("");
         setEmail("");
         setPassword("");
         fetchUsers();
       } else {
-        setMessage("Gabim gjatë regjistrimit.");
+        setMessage("Error during registration.");
       }
     } catch (err: any) {
-      console.error("Gabim gjatë lidhjes me serverin:", err.message || err);
-      setMessage("Gabim gjatë lidhjes me serverin.");
+      console.error("Error connecting to server:", err.message || err);
+      setMessage("Error connecting to server.");
     }
   };
 
@@ -101,7 +101,7 @@ const SignUpPage = () => {
             fontSize: "1.8rem",
           }}
         >
-          Regjistrimi
+          Registration
         </h2>
 
         {message && (
@@ -109,7 +109,7 @@ const SignUpPage = () => {
             style={{
               textAlign: "center",
               marginBottom: "20px",
-              color: message.includes("sukses") ? "#4caf50" : "#f44336",
+              color: message.includes("successful") ? "#4caf50" : "#f44336",
               fontWeight: "600",
             }}
           >
@@ -129,7 +129,7 @@ const SignUpPage = () => {
               fontSize: "0.9rem",
             }}
           >
-            Emri:
+            Name:
             <input
               type="text"
               value={name}
@@ -189,7 +189,7 @@ const SignUpPage = () => {
               fontSize: "0.9rem",
             }}
           >
-            Fjalëkalimi:
+            Password:
             <input
               type="password"
               value={password}
@@ -232,7 +232,7 @@ const SignUpPage = () => {
               (e.currentTarget.style.backgroundColor = "#3f51b5")
             }
           >
-            Regjistrohu
+            Sign Up
           </button>
         </form>
 
@@ -256,7 +256,7 @@ const SignUpPage = () => {
               e.currentTarget.style.textDecoration = "none";
             }}
           >
-            Ke një llogari? Kyçu tani
+            Already have an account? Log in now
           </Link>
         </div>
       </div>

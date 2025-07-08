@@ -41,7 +41,7 @@ const AboutForm = () => {
           letterSpacing: "1px",
         }}
       >
-        Rreth Brandit Tonë
+        About Our Brand
       </h1>
 
       {/* Vijë ndarëse dekorative */}
@@ -66,22 +66,21 @@ const AboutForm = () => {
         }}
       >
         <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#ddd" }}>
-          Ne ofrojmë{" "}
+          We offer{" "}
           <span style={{ color: "#00d8a0", fontWeight: "600" }}>
-            produkte premium
+            premium products
           </span>{" "}
-          për kujdesin e përditshëm të meshkujve.
+          for men's daily care.
         </p>
         <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#ccc" }}>
-          Të dizajnuara për ata që vlerësojnë{" "}
+          Designed for those who appreciate{" "}
           <span style={{ fontStyle: "italic" }}>
-            stilin, pastërtinë dhe efikasitetin
+            style, cleanliness, and efficiency
           </span>
           .
         </p>
         <p style={{ fontSize: "18px", lineHeight: "1.8", color: "#bbb" }}>
-          Shkenca dhe natyra në një kombinim të balancuar për rezultate të
-          vërteta.
+          Science and nature in a balanced combination for real results.
         </p>
       </div>
 
@@ -97,12 +96,11 @@ const AboutForm = () => {
       >
         <div style={{ flex: 1 }}>
           <h2 style={{ fontSize: "23px", marginBottom: "12px", color: "#fff" }}>
-            Për meshkuj që duan më të mirën
+            For Men Who Want the Best
           </h2>
           <p style={{ fontSize: "17px", lineHeight: "1.7", color: "#ddd" }}>
-            Çdo produkt është krijuar me përbërës të pastër dhe të fuqishëm për
-            të përmirësuar rutinën tuaj të përditshme. Ne besojmë në kujdes me
-            klas dhe cilësi.
+            Each product is made with pure and powerful ingredients to improve
+            your daily routine. We believe in care with class and quality.
           </p>
         </div>
       </div>
@@ -136,7 +134,7 @@ const AboutForm = () => {
             e.currentTarget.style.backgroundColor = "#00d8a0";
           }}
         >
-          Shfleto Produktet
+          Browse Products
         </button>
       </div>
     </div>

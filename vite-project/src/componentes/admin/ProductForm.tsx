@@ -32,6 +32,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
   );
   const [tagError, setTagError] = useState<string | null>(null);
   const [filterTagError, setFilterTagError] = useState<string | null>(null);
+
   useEffect(() => {
     if (product) {
       setRawTagsInput(product.tags.join(", "));
@@ -67,9 +68,9 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
 
       if (currentTags.length > 3) {
         if (name === "tags") {
-          setTagError("Maksimumi 3 etiketa lejohen.");
+          setTagError("A maximum of 3 tags are allowed.");
         } else {
-          setFilterTagError("Maksimumi 3 etiketa filtri lejohen.");
+          setFilterTagError("A maximum of 3 filter tags are allowed.");
         }
       } else {
         setFormData((prevData) => ({
@@ -108,11 +109,11 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
       .filter((t) => t !== "");
 
     if (finalTags.length > 3) {
-      setTagError("Maksimumi 3 etiketa lejohen.");
+      setTagError("A maximum of 3 tags are allowed.");
       return;
     }
     if (finalFilterTags.length > 3) {
-      setFilterTagError("Maksimumi 3 etiketa filtri lejohen.");
+      setFilterTagError("A maximum of 3 filter tags are allowed.");
       return;
     }
 
@@ -148,7 +149,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
           <form onSubmit={handleSubmit}>
             <div className="modal-header bg-gradient-primary text-white py-3 px-4 rounded-top-4">
               <h5 className="modal-title fw-bold m-0" id="productFormModal">
-                {product ? "Edito Produkt" : "Shto Produkt"}
+                {product ? "Edit Product" : "Add Product"}
               </h5>
               <button
                 type="button"
@@ -165,13 +166,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 overflowY: "auto",
               }}
             >
-              {/* Titulli */}
+              {/* Title */}
               <div className="mb-3">
                 <label
                   htmlFor="title"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Titulli
+                  Title
                 </label>
                 <input
                   type="text"
@@ -185,13 +186,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 />
               </div>
 
-              {/* Përshkrimi */}
+              {/* Description */}
               <div className="mb-3">
                 <label
                   htmlFor="description"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Përshkrimi
+                  Description
                 </label>
                 <textarea
                   className="form-control form-control-sm rounded-3"
@@ -204,13 +205,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 />
               </div>
 
-              {/* Çmimi */}
+              {/* Price */}
               <div className="mb-3">
                 <label
                   htmlFor="price"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Çmimi
+                  Price
                 </label>
                 <input
                   type="text"
@@ -223,13 +224,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 />
               </div>
 
-              {/* Foto (emri i file-it) */}
+              {/* Image (filename) */}
               <div className="mb-3">
                 <label
                   htmlFor="img"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Foto (emri i file-it)
+                  Image (filename)
                 </label>
                 <input
                   type="text"
@@ -247,7 +248,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   htmlFor="tags"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Etiketa (maks. 3, nda me presje)
+                  Tags (max 3, separate with commas)
                 </label>
                 <input
                   type="text"
@@ -256,7 +257,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   }`}
                   id="tags"
                   name="tags"
-                  value={rawTagsInput} // Këtu përdorim state-in e papërpunuar
+                  value={rawTagsInput} // Using unprocessed state here
                   onChange={handleChange}
                 />
                 {tagError && (
@@ -264,13 +265,13 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 )}
               </div>
 
-              {/* FilterTags */}
+              {/* Filter Tags */}
               <div className="mb-3">
                 <label
                   htmlFor="filterTags"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Filter Tags (maks. 3, nda me presje)
+                  Filter Tags (max 3, separate with commas)
                 </label>
                 <input
                   type="text"
@@ -279,7 +280,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   }`}
                   id="filterTags"
                   name="filterTags"
-                  value={rawFilterTagsInput} // Këtu përdorim state-in e papërpunuar
+                  value={rawFilterTagsInput} // Using unprocessed state here
                   onChange={handleChange}
                 />
                 {filterTagError && (
@@ -295,7 +296,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   htmlFor="rating"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Vlerësimi (rating) - 1 deri 5
+                  Rating - 1 to 5
                 </label>
                 <input
                   type="number"
@@ -316,7 +317,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   htmlFor="discount"
                   className="form-label small fw-semibold text-muted mb-1"
                 >
-                  Discount (p.sh. "10% OFF")
+                  Discount (e.g., "10% OFF")
                 </label>
                 <input
                   type="text"
@@ -328,7 +329,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 />
               </div>
 
-              {/* Produkt i Ri Checkbox */}
+              {/* New Product Checkbox */}
               <div className="form-check form-switch mb-3 d-flex align-items-center">
                 <input
                   type="checkbox"
@@ -342,7 +343,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   className="form-check-label small fw-semibold text-muted"
                   htmlFor="isNew"
                 >
-                  Produkt i Ri
+                  New Product
                 </label>
               </div>
             </div>
@@ -353,12 +354,12 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                 className="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1 rounded-pill px-3 py-2"
                 onClick={onClose}
               >
-                <XCircle size={16} /> Anulo
+                <XCircle size={16} /> Cancel
               </button>
               <button
                 type="submit"
                 className="btn btn-primary btn-sm d-flex align-items-center gap-1 rounded-pill px-3 py-2"
-                // Disables button if there are errors
+                // Disable button if there are errors
                 disabled={!!tagError || !!filterTagError}
                 style={{
                   background:
@@ -367,7 +368,7 @@ const ProductForm = ({ product, onClose, onSave }: FormProps) => {
                   boxShadow: "0 4px 8px rgba(102, 126, 234, 0.3)",
                 }}
               >
-                <Save size={16} /> Ruaj
+                <Save size={16} /> Save
               </button>
             </div>
           </form>

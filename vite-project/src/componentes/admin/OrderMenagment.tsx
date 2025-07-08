@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Package, Calendar, Trash2, Plus } from "lucide-react";
+import { Package, Calendar, Trash2, Plus, Edit } from "lucide-react";
 import { useAppContext, OrderStatus } from "../../context/AppContext";
 import OrderForm from "./OrderForm";
 
@@ -72,9 +72,7 @@ const OrderManagement = () => {
 
     if (name === "productTitle") {
       const selectedProduct = productdata.find((p) => p.title === value);
-      const price = selectedProduct
-        ? parseFloat(selectedProduct.price) || 0
-        : 0;
+      const price = selectedProduct ? Number(selectedProduct.price) || 0 : 0;
 
       setNewOrder((prev) => ({
         ...prev,
@@ -87,9 +85,7 @@ const OrderManagement = () => {
       const selectedProduct = productdata.find(
         (p) => p.title === newOrder.productTitle
       );
-      const price = selectedProduct
-        ? parseFloat(selectedProduct.price) || 0
-        : 0;
+      const price = selectedProduct ? Number(selectedProduct.price) || 0 : 0;
 
       setNewOrder((prev) => ({
         ...prev,
@@ -112,7 +108,7 @@ const OrderManagement = () => {
       !newOrder.adress ||
       !newOrder.phone
     ) {
-      alert("Ju lutem plotësoni të gjitha fushat.");
+      alert("Please fill out all required fields.");
       return;
     }
 
@@ -143,10 +139,10 @@ const OrderManagement = () => {
 
     if (editingOrderId) {
       await updateOrder(orderEntry.id, orderEntry);
-      showSuccess("Porosia u përditësua me sukses!");
+      showSuccess("Order updated successfully!");
     } else {
       await addOrder(orderEntry);
-      showSuccess("Porosia u shtua me sukses!");
+      showSuccess("Order added successfully!");
     }
 
     setEditingOrderId(null);
@@ -192,15 +188,15 @@ const OrderManagement = () => {
   };
 
   const handleDeleteOrder = async (id: string) => {
-    if (window.confirm("A jeni i sigurt që doni ta fshini këtë porosi?")) {
+    if (window.confirm("Are you sure you want to delete this order?")) {
       await deleteOrder(id);
-      showSuccess("Porosia u fshi me sukses!");
+      showSuccess("Order deleted successfully!");
     }
   };
 
   const handleStatusChange = async (id: string, status: OrderStatus) => {
     await updateOrderStatus(id, status);
-    showSuccess("Statusi u përditësua me sukses!");
+    showSuccess("Status updated successfully!");
   };
 
   const showSuccess = (message: string) => {
@@ -234,7 +230,7 @@ const OrderManagement = () => {
   return (
     <div className="container my-4">
       <h1 className="text-center mb-4" style={{ color: "#3b82f6" }}>
-        Menaxhimi i Porosive
+        Order Management
       </h1>
 
       {successMessage && (
@@ -246,7 +242,7 @@ const OrderManagement = () => {
       <div className="d-flex justify-content-between mb-3">
         <input
           type="text"
-          placeholder="Kërko..."
+          placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="form-control w-50"
@@ -257,7 +253,7 @@ const OrderManagement = () => {
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as OrderStatus)}
         >
-          <option value="">Të gjitha</option>
+          <option value="">All</option>
           {orderStatuses.map((s) => (
             <option key={s} value={s}>
               {s}
@@ -266,7 +262,7 @@ const OrderManagement = () => {
         </select>
 
         <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-          <Plus className="me-2" /> Shto Porosi
+          <Plus className="me-2" /> Add Order
         </button>
       </div>
 
@@ -284,22 +280,22 @@ const OrderManagement = () => {
         <thead className="table-primary">
           <tr>
             <th>ID</th>
-            <th>Klienti</th>
-            <th>Produkti</th>
-            <th>Sasia</th>
-            <th>Çmimi</th>
-            <th>Data</th>
-            <th>Adresa</th>
-            <th>Kontakti</th>
-            <th>Statusi</th>
-            <th>Veprime</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Date</th>
+            <th>Address</th>
+            <th>Contact No.</th>
+            <th>Status</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {filteredOrders.length === 0 ? (
             <tr>
               <td colSpan={10} className="text-center text-muted">
-                <Package /> Nuk u gjetën porosi.
+                <Package /> No orders found.
               </td>
             </tr>
           ) : (
@@ -325,10 +321,11 @@ const OrderManagement = () => {
                 </td>
                 <td>
                   <Calendar className="me-1" size={16} />
-                  {new Date(o.date).toLocaleDateString("sq-AL")}
+                  {new Date(o.date).toLocaleDateString("en-US")}
                 </td>
                 <td>{o.customer.address}</td>
-                <td>{o.customer.phoneNumber}</td>
+                <td>{o.customer.phoneNumber || o.customer.phone || "-"}</td>
+
                 <td>
                   <span
                     className="badge"
@@ -355,7 +352,7 @@ const OrderManagement = () => {
                     className="btn btn-link text-primary me-2"
                     onClick={() => handleEditOrder(o)}
                   >
-                    ✏️
+                    <Edit />
                   </button>
                   <button
                     className="btn btn-link text-danger"
@@ -371,9 +368,7 @@ const OrderManagement = () => {
       </table>
 
       <div className="text-end mt-4">
-        <div className="fw-bold">
-          Totali i të Ardhurave: €{totalRevenue.toFixed(2)}
-        </div>
+        <div className="fw-bold">Total Revenue: €{totalRevenue.toFixed(2)}</div>
       </div>
     </div>
   );

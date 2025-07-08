@@ -8,15 +8,11 @@
       "role": "admin"
     },
     {
-      "role": "user",
-      "id": "1a83"
-    },
-    {
       "id": "fdb7",
       "name": "elgi",
       "email": "allmucaelgi2@gmail.com",
       "password": "333",
-      "role": "user"
+      "role": "admin"
     },
     {
       "id": "4661",
@@ -50,6 +46,13 @@
       "name": "ersi",
       "email": "ers@gmail.com",
       "password": "123ersi",
+      "role": "user"
+    },
+    {
+      "id": "749e",
+      "name": "joan",
+      "email": "joan1@gmail.com",
+      "password": "1234",
       "role": "user"
     }
   ],
@@ -102,6 +105,13 @@
       "email": "aldo@mail.com",
       "password": "aaaaaa",
       "comment": "iiiiiiii\n"
+    },
+    {
+      "id": "1751198508944",
+      "name": "aldo",
+      "email": "aldo@mail.com",
+      "message": "heloo",
+      "date": "2025-06-29T12:01:48.944Z"
     }
   ],
   "subscribers": [
@@ -279,293 +289,28 @@
   ],
   "order": [
     {
-      "id": "99a9",
+      "id": "2183",
       "customer": {
-        "firstName": "Lamine",
-        "lastName": "Yamal",
-        "email": "lamine@gmail.com",
-        "address": "PPOD",
-        "city": "Bathore,Kamez",
+        "firstName": "cxcc",
+        "lastName": "xc",
+        "email": "aprov@mail.com",
+        "phone": "231231231",
+        "address": "trrrr",
+        "city": "trrr",
         "zipCode": "1001",
-        "country": "Albania",
-        "phoneNumber": "0696969696"
+        "country": "trrr"
       },
       "products": [
         {
-          "id": "PRD1750675151189",
-          "title": "Hydrating Cream",
-          "price": "19.99",
-          "img": "hydrating-cream.jpg",
-          "quantity": 6
-        }
-      ],
-      "date": "2025-06-23T10:39:11.189Z",
-      "status": "shipped"
-    },
-    {
-      "id": "ORD1750580213584",
-      "customer": {
-        "firstName": "aldo",
-        "lastName": "mecani",
-        "email": "aldo@mail.com",
-        "address": "tirane",
-        "city": "tirane",
-        "zipCode": "1001",
-        "country": "Albania",
-        "phoneNumber": "0696969696"
-      },
-      "products": [
-        {
-          "id": "PRD1750676481902",
-          "title": "Scrub Fytyre",
-          "price": "16.99",
-          "img": "naturalskincare.jpg",
+          "id": "jqldet7sd",
+          "title": "elgi",
+          "price": "30.00",
+          "img": "jhsdljfh",
           "quantity": 1
         }
       ],
-      "date": "2025-06-23T11:01:21.902Z",
+      "date": "2025-07-08T17:55:47.809Z",
       "status": "delivered"
-    },
-    {
-      "id": "ORD1750672253312",
-      "customer": {
-        "firstName": "agron",
-        "lastName": "mecani",
-        "email": "aldo@mail.com",
-        "address": "tirane",
-        "city": "tirane",
-        "zipCode": "1001",
-        "country": "shqipri",
-        "phoneNumber": "0696969696"
-      },
-      "products": [
-        {
-          "id": "PRD1750676493942",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 1
-        }
-      ],
-      "date": "2025-06-23T11:01:33.942Z",
-      "status": "delivered"
-    },
-    {
-      "id": "624d",
-      "customer": {
-        "firstName": "sadf",
-        "lastName": "xdgh",
-        "email": "bfj",
-        "address": "jhf",
-        "city": "ghdfhd",
-        "zipCode": "123",
-        "country": "bfsgsf"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 3
-        },
-        {
-          "id": "p1",
-          "title": "Cleanser Amino Men",
-          "price": "24.99",
-          "img": "men-skin-care.jpg",
-          "quantity": 1
-        },
-        {
-          "id": "p3",
-          "title": "Shampo Bimore",
-          "price": "14.99",
-          "img": "shampo.jpg",
-          "quantity": 2
-        }
-      ],
-      "date": "2025-06-29T09:13:22.081Z",
-      "status": "pending"
-    },
-    {
-      "id": "3861",
-      "customer": {
-        "firstName": "aldo",
-        "lastName": "aldo",
-        "email": "aldo@mail.com",
-        "address": "aldo",
-        "city": "aldo",
-        "zipCode": "1001",
-        "country": "aldo"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 3
-        },
-        {
-          "id": "p1",
-          "title": "Cleanser Amino Men",
-          "price": "24.99",
-          "img": "men-skin-care.jpg",
-          "quantity": 1
-        },
-        {
-          "id": "p3",
-          "title": "Shampo Bimore",
-          "price": "14.99",
-          "img": "shampo.jpg",
-          "quantity": 3
-        }
-      ],
-      "date": "2025-06-29T09:15:26.647Z",
-      "status": "confirmed"
-    },
-    {
-      "id": "227a",
-      "customer": {
-        "firstName": "aldo",
-        "lastName": "aldo",
-        "email": "aldo@mail.com",
-        "address": "aldo",
-        "city": "aldo",
-        "zipCode": "1001",
-        "country": "aldo"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 3
-        },
-        {
-          "id": "p1",
-          "title": "Cleanser Amino Men",
-          "price": "24.99",
-          "img": "men-skin-care.jpg",
-          "quantity": 1
-        },
-        {
-          "id": "p3",
-          "title": "Shampo Bimore",
-          "price": "14.99",
-          "img": "shampo.jpg",
-          "quantity": 3
-        }
-      ],
-      "date": "2025-06-29T09:16:20.514Z",
-      "status": "pending"
-    },
-    {
-      "id": "e40e",
-      "customer": {
-        "firstName": "as",
-        "lastName": "as",
-        "email": "asas",
-        "address": "asa",
-        "city": "asa",
-        "zipCode": "asa",
-        "country": "asa"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 3
-        },
-        {
-          "id": "p1",
-          "title": "Cleanser Amino Men",
-          "price": "24.99",
-          "img": "men-skin-care.jpg",
-          "quantity": 1
-        },
-        {
-          "id": "p3",
-          "title": "Shampo Bimore",
-          "price": "14.99",
-          "img": "shampo.jpg",
-          "quantity": 3
-        }
-      ],
-      "date": "2025-06-29T09:17:34.425Z",
-      "status": "pending"
-    },
-    {
-      "id": "fbbf",
-      "customer": {
-        "firstName": "ersi",
-        "lastName": "domi",
-        "email": "ersi@gmail.com",
-        "address": "2334",
-        "city": "tirsne",
-        "zipCode": "1001",
-        "country": "alb"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 1
-        }
-      ],
-      "date": "2025-06-29T10:08:00.937Z",
-      "status": "pending"
-    },
-    {
-      "id": "a349",
-      "customer": {
-        "firstName": "ersi",
-        "lastName": "domi",
-        "email": "ersi@gmail.com",
-        "address": "123",
-        "city": "1234",
-        "zipCode": "1001",
-        "country": "alb"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 1
-        }
-      ],
-      "date": "2025-06-29T10:11:49.542Z",
-      "status": "pending"
-    },
-    {
-      "id": "f45d",
-      "customer": {
-        "firstName": "aldo",
-        "lastName": "......",
-        "email": "aldoprov@gmail.com",
-        "address": "124",
-        "city": "123",
-        "zipCode": "321",
-        "country": "231"
-      },
-      "products": [
-        {
-          "id": "p2",
-          "title": "Krem Hidratues",
-          "price": "19.99",
-          "img": "krem.webp",
-          "quantity": 1
-        }
-      ],
-      "date": "2025-06-29T11:39:07.058Z",
-      "status": "pending"
     }
   ],
   "rating": [
@@ -579,7 +324,7 @@
       "id": "r2",
       "productId": "p2",
       "userId": "c11f",
-      "rating": 3
+      "rating": 5
     },
     {
       "id": "r3",
@@ -607,7 +352,9 @@
     },
     {
       "id": "p1",
-      "rating": 5
+      "productId": "jqldet7sd",
+      "userId": "c11f",
+      "rating": 4
     },
     {
       "id": "p1",
@@ -728,6 +475,14 @@
     {
       "id": "bi830rng9",
       "rating": 2
+    },
+    {
+      "id": "p2",
+      "rating": 5
+    },
+    {
+      "id": "p2",
+      "rating": 5
     }
   ]
 }

@@ -162,7 +162,7 @@ const FeedbackSection: React.FC = () => {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Çfarë thonë klientët tanë
+            What Our Clients Say
           </h2>
           <p
             style={{
@@ -173,8 +173,8 @@ const FeedbackSection: React.FC = () => {
               lineHeight: "1.6",
             }}
           >
-            Eksperiencat e vërteta nga klientët që kanë përdorur produktet dhe
-            shërbimet tona
+            Real experiences from customers who have used our products and
+            services
           </p>
         </div>
 
@@ -190,24 +190,24 @@ const FeedbackSection: React.FC = () => {
           }}
         >
           <TestimonialCard
-            quote="Ky produkt është i shkëlqyer! Cilësia është e jashtëzakonshme dhe çmimi shumë i arsyeshëm. Do ta rekomandoj gjithmonë miqve dhe familjes."
+            quote="This product is excellent! The quality is outstanding and the price very reasonable. I will always recommend it to friends and family."
             imageSrc="/klienti.jpg"
             name="Alban Berisha"
-            company="Drejtor Marketing"
+            company="Marketing Director"
           />
 
           <TestimonialCard
-            quote="Më ka ndihmuar shumë në përditshmërinë time. Produkti është cilësor dhe shërbimi ndaj klientit është i shkëlqyer. Vlerësoj shumë profesionalizmin tuaj!"
+            quote="It has helped me a lot in my daily life. The product is high quality and the customer service is excellent. I highly appreciate your professionalism!"
             imageSrc="/klientja.jpg"
             name="Elona Krasniqi"
-            company="Arkitekte"
+            company="Architect"
           />
 
           <TestimonialCard
-            quote="Një përvojë e shkëlqyer me produktin tuaj. Metoda e përdorimit është e thjeshtë dhe rezultatet janë të dukshme. Shumë faleminderit për këtë zgjidhje!"
+            quote="An excellent experience with your product. The usage method is simple and the results are visible. Thank you very much for this solution!"
             imageSrc="/klientii.jpg"
             name="Besnik Hoxha"
-            company="Inxhinier"
+            company="Engineer"
           />
         </div>
 
@@ -239,7 +239,7 @@ const FeedbackSection: React.FC = () => {
               (e.currentTarget.style.backgroundColor = "#007bff")
             }
           >
-            Lini një koment
+            Leave a Comment
           </Link>
         </div>
       </div>

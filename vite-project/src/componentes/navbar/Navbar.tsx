@@ -156,7 +156,7 @@ const Navbar = () => {
                       className="dropdown-item text-danger"
                       onClick={handleLogout}
                     >
-                      Dil
+                      Log Out
                     </button>
                   </li>
                 </ul>

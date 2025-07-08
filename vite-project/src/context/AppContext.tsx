@@ -12,12 +12,13 @@ type Users = {
   firstName: ReactNode;
   lastName: ReactNode;
   address: ReactNode;
-  id: number;
+  id: string; // <-- ndryshuar në string për përputhje me rating.userId
   name: string;
   email: string;
   password: string;
   role: "admin" | "user";
 };
+
 type Customer = {
   [x: string]: any;
   firstName: string;
@@ -27,6 +28,7 @@ type Customer = {
   city: string;
   zipCode: string;
   country: string;
+  phoneNumber?: string;
 };
 
 type Product = {
@@ -81,12 +83,13 @@ type AppContextType = {
   contacts: Contact[];
   productdata: ProductData[];
   Rating: Rating[];
+  fetchRatings: () => Promise<void>;
   updateRating: (id: string, rating: number) => Promise<void>;
   fetchUsers: () => Promise<void>;
   currentUser: Users | null;
   setCurrentUser: (user: Users | null) => void;
-  deleteUser: (id: number) => Promise<void>;
-  updateUserRole: (id: number, role: "admin" | "user") => Promise<void>;
+  deleteUser: (id: string) => Promise<void>;
+  updateUserRole: (id: string, role: "admin" | "user") => Promise<void>;
 
   order: Order[];
   fetchContacts: () => Promise<void>;
@@ -109,9 +112,9 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [Rating, setUserRating] = useState<Rating[]>([]);
   const [Users, setUsers] = useState<Users[]>([]);
   const [_currentUser, _setCurrentUser] = useState<Users | null>(null);
-
   const [order, setOrder] = useState<Order[]>([]);
 
+  // Orders
   const fetchOrder = async () => {
     try {
       const response = await axios.get("http://localhost:3000/order");
@@ -121,6 +124,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Contacts
   const fetchContacts = async () => {
     try {
       const response = await axios.get("http://localhost:3000/contact");
@@ -130,6 +134,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Products
   const fetchProductData = async () => {
     try {
       const response = await axios.get("http://localhost:3000/productdata");
@@ -139,6 +144,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Ratings
   const fetchRatings = async () => {
     try {
       const response = await axios.get("http://localhost:3000/rating");
@@ -158,6 +164,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Users
   const fetchUsers = async () => {
     try {
       const response = await axios.get("http://localhost:3000/users");
@@ -187,6 +194,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  // Product operations
   const deleteProduct = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/productdata/${id}`);
@@ -217,6 +225,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // Order operations
   const addOrder = async (newOrder: Order) => {
     try {
       await axios.post("http://localhost:3000/order", newOrder);
@@ -250,14 +259,15 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
       if (!existingOrder) return;
 
       const updatedOrder = { ...existingOrder, status };
-
       await axios.put(`http://localhost:3000/order/${id}`, updatedOrder);
       await fetchOrder();
     } catch (err) {
       console.error("Gabim gjatë përditësimit të statusit të porosisë:", err);
     }
   };
-  const deleteUser = async (id: number) => {
+
+  // User operations
+  const deleteUser = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/users/${id}`);
       await fetchUsers();
@@ -266,7 +276,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const updateUserRole = async (id: number, role: "admin" | "user") => {
+  const updateUserRole = async (id: string, role: "admin" | "user") => {
     try {
       await axios.patch(`http://localhost:3000/users/${id}`, { role });
       await fetchUsers();
@@ -291,13 +301,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         contacts,
         productdata,
         Rating,
+        fetchRatings,
+        updateRating,
         fetchContacts,
         fetchProductData,
         fetchUsers,
         deleteProduct,
         addProduct,
         updateProduct,
-        updateRating,
         currentUser: _currentUser,
         setCurrentUser,
 

@@ -18,12 +18,12 @@ const OrderForm = ({
   return (
     <div className="card p-4 mb-4" style={{ backgroundColor: "#e0f2fe" }}>
       <h5 className="mb-3 text-center" style={{ color: "#0284c7" }}>
-        Shto Porosi të Re
+        Add New Order
       </h5>
       <div className="row g-3">
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Emri i Klientit
+            Customer First Name
           </label>
           <input
             type="text"
@@ -36,7 +36,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Mbiemri
+            Last Name
           </label>
           <input
             type="text"
@@ -62,7 +62,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Produkti
+            Product
           </label>
           <select
             name="productTitle"
@@ -70,7 +70,7 @@ const OrderForm = ({
             value={newOrder.productTitle}
             onChange={handleNewOrderChange}
           >
-            <option value="">Zgjidh një produkt</option>
+            <option value="">Select a product</option>
             {productdata.map((product) => (
               <option key={product.id} value={product.title}>
                 {product.title}
@@ -81,7 +81,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Sasia
+            Quantity
           </label>
           <input
             type="number"
@@ -95,7 +95,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Adresa
+            Address
           </label>
           <input
             type="text"
@@ -108,7 +108,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Çmimi (€)
+            Price (€)
           </label>
           <input
             type="number"
@@ -122,7 +122,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Numri i Telefonit
+            Phone Number
           </label>
           <input
             type="tel"
@@ -135,7 +135,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Qyteti
+            City
           </label>
           <input
             type="text"
@@ -148,7 +148,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            ZipCode
+            Zip Code
           </label>
           <input
             type="text"
@@ -161,7 +161,7 @@ const OrderForm = ({
 
         <div className="col-md-6">
           <label className="form-label" style={{ color: "#0369a1" }}>
-            Shteti
+            Country
           </label>
           <input
             type="text"
@@ -175,13 +175,13 @@ const OrderForm = ({
 
       <div className="mt-3 d-flex gap-2 justify-content-center">
         <button className="btn btn-success" onClick={handleAddOrder}>
-          Ruaj Porosinë
+          Save Order
         </button>
         <button
           className="btn btn-secondary"
           onClick={() => setShowForm(false)}
         >
-          Anulo
+          Cancel
         </button>
       </div>
     </div>

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import {
   BarChart,
   Bar,
@@ -9,62 +8,48 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { useAppContext } from "../../context/AppContext";
 
-type Product = {
-  title: string;
-  price: string;
-  quantity: number;
-};
-type Customer = {
-  firstName: string;
-  lastName: string;
-};
-type Order = {
-  id: string;
-  customer: Customer;
-  products: Product[];
-  date: string;
-  status: string;
-};
-const Raport = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
+const Report = () => {
+  const { order } = useAppContext();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/order")
-      .then((res) => {
-        const delivered = res.data.filter((o: Order) => {
-          if (o.status !== "Delivered") return false;
-          const orderDate = new Date(o.date);
-          const fromDate = startDate ? new Date(startDate) : null;
-          const toDate = endDate ? new Date(endDate) : null;
-          if (fromDate && orderDate < fromDate) return false;
-          if (toDate && orderDate > toDate) return false;
-          return true;
-        });
-        setOrders(delivered);
-      })
-      .catch((err) => console.error("Gabim:", err));
-  }, [startDate, endDate]);
-  // Llogarit totalin për çdo porosi
-  const total = orders.reduce((sum, o) => {
+
+  // Filter orders with status "delivered" and by date range
+  const filteredOrders = order.filter((o) => {
+    if (o.status.toLowerCase() !== "delivered") return false;
+
+    const orderDate = new Date(o.date);
+    const from = startDate ? new Date(startDate) : null;
+    const to = endDate ? new Date(endDate) : null;
+
+    if (from && orderDate < from) return false;
+    if (to && orderDate > to) return false;
+
+    return true;
+  });
+
+  // Calculate total sales amount
+  const total = filteredOrders.reduce((sum, o) => {
     const orderTotal = o.products.reduce(
       (s, p) => s + parseFloat(p.price) * (p.quantity || 1),
       0
     );
     return sum + orderTotal;
   }, 0);
+
+  // Calculate profit and loss
   const profit = total * 0.3;
   const loss = total - profit;
+
   return (
     <div className="container mt-5" style={{ paddingTop: "20px" }}>
-      <h2 className="text-center mb-4 text-light mt-5">
-        :bar_chart: Raporti Financiar
-      </h2>
+      <h2 className="text-center mb-4 text-light mt-5">📊 Financial Report</h2>
+
+      {/* Date filter */}
       <div className="row mb-4">
         <div className="col-md-3">
-          <label className="form-label text-light">Nga data:</label>
+          <label className="form-label text-light">From Date:</label>
           <input
             type="date"
             className="form-control"
@@ -73,7 +58,7 @@ const Raport = () => {
           />
         </div>
         <div className="col-md-3">
-          <label className="form-label text-light">Deri më:</label>
+          <label className="form-label text-light">To Date:</label>
           <input
             type="date"
             className="form-control"
@@ -82,7 +67,8 @@ const Raport = () => {
           />
         </div>
       </div>
-      {/* KARTAT */}
+
+      {/* Cards */}
       <div className="row justify-content-center mb-5">
         <div className="col-md-3">
           <div
@@ -90,7 +76,7 @@ const Raport = () => {
             style={{ backgroundColor: "#FFFFFF" }}
           >
             <div className="card-body">
-              <h5 className="card-title text-muted">Shitje Totale</h5>
+              <h5 className="card-title text-muted">Total Sales</h5>
               <h3 className="fw-bold">{total.toFixed(2)} €</h3>
             </div>
           </div>
@@ -101,7 +87,7 @@ const Raport = () => {
             style={{ backgroundColor: "#D1E7DD" }}
           >
             <div className="card-body">
-              <h5 className="card-title text-dark">Fitimi (30%)</h5>
+              <h5 className="card-title text-dark">Profit (30%)</h5>
               <h3 className="fw-bold">{profit.toFixed(2)} €</h3>
             </div>
           </div>
@@ -112,23 +98,22 @@ const Raport = () => {
             style={{ backgroundColor: "#F8D7DA" }}
           >
             <div className="card-body">
-              <h5 className="card-title text-dark">Humbja</h5>
+              <h5 className="card-title text-dark">Loss</h5>
               <h3 className="fw-bold">{loss.toFixed(2)} €</h3>
             </div>
           </div>
         </div>
       </div>
-      {/* GRAFIKU */}
-      <h5 className="text-light mb-3">
-        :bar_chart: Grafik i Përmbledhjes Financiare
-      </h5>
+
+      {/* Chart */}
+      <h5 className="text-light mb-3">📊 Financial Summary Chart</h5>
       <div style={{ width: "100%", height: 300 }} className="mb-5">
         <ResponsiveContainer>
           <BarChart
             data={[
-              { name: "Shitje Totale", value: total },
-              { name: "Fitimi", value: profit },
-              { name: "Humbja", value: loss },
+              { name: "Total Sales", value: total },
+              { name: "Profit", value: profit },
+              { name: "Loss", value: loss },
             ]}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -139,27 +124,28 @@ const Raport = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      {/* TABELA */}
-      <h5 className="text-light mb-3">:package: Detaje të Porosive</h5>
+
+      {/* Orders Table */}
+      <h5 className="text-light mb-3">📦 Order Details</h5>
       <table className="table table-dark table-bordered">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Klienti</th>
-            <th>Data</th>
-            <th>Statusi</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Status</th>
             <th>Total (€)</th>
           </tr>
         </thead>
         <tbody>
-          {orders.length === 0 ? (
+          {filteredOrders.length === 0 ? (
             <tr>
               <td colSpan={5} className="text-center">
-                Nuk ka porosi të dorëzuara.
+                No delivered orders found.
               </td>
             </tr>
           ) : (
-            orders.map((o) => {
+            filteredOrders.map((o) => {
               const totalOrder = o.products.reduce(
                 (s, p) => s + parseFloat(p.price) * (p.quantity || 1),
                 0
@@ -182,4 +168,5 @@ const Raport = () => {
     </div>
   );
 };
-export default Raport;
+
+export default Report;

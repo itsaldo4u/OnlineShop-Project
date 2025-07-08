@@ -26,16 +26,16 @@ type ProductData = {
 };
 
 const filters = [
-  { key: "all", label: "Të gjitha" },
-  { key: "hidratim", label: "Hidratim" },
-  { key: "pastrim", label: "Pastrim" },
-  { key: "natyral", label: "Natyral" },
-  { key: "discount", label: "Oferta" },
-  { key: "parfum", label: "Parfume" },
+  { key: "all", label: "All" },
+  { key: "hidratim", label: "Hydration" },
+  { key: "pastrim", label: "Cleansing" },
+  { key: "natyral", label: "Natural" },
+  { key: "discount", label: "On Sale" },
+  { key: "parfum", label: "Perfume" },
 ];
 
 export default function ProductList() {
-  const { productdata } = useAppContext();
+  const { productdata, currentUser } = useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
@@ -123,8 +123,13 @@ export default function ProductList() {
 
   // Handle checkout navigation
   const handleCheckout = () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     if (cartItems.length === 0) {
-      alert("Shporta juaj është bosh!");
+      alert("Your cart is empty!");
       return;
     }
 
@@ -218,7 +223,7 @@ export default function ProductList() {
         <>
           <div className="cart-drawer" role="dialog" aria-modal="true">
             <div className="cart-header-section">
-              <h2 className="cart-title">Shporta ({totalItems})</h2>
+              <h2 className="cart-title">Cart ({totalItems})</h2>
               <button
                 onClick={() => setIsCartOpen(false)}
                 className="close-cart-button"
@@ -234,7 +239,7 @@ export default function ProductList() {
                   <div className="empty-cart-icon" aria-hidden="true">
                     🛒
                   </div>
-                  <p>Shporta juaj është bosh</p>
+                  <p>Your cart is empty</p>
                 </div>
               ) : (
                 <div>
@@ -288,7 +293,7 @@ export default function ProductList() {
             {cartItems.length > 0 && (
               <div className="cart-footer">
                 <div className="cart-total">
-                  <span>Totali:</span>
+                  <span>Total:</span>
                   <span style={{ fontWeight: "bold" }}>
                     €{totalPrice.toFixed(2)}
                   </span>
@@ -296,14 +301,14 @@ export default function ProductList() {
 
                 <div className="cart-actions">
                   <button onClick={clearCart} className="clear-cart-button">
-                    Pastro
+                    Clear
                   </button>
                   <button
                     onClick={handleCheckout}
                     className="checkout-button"
                     disabled={cartItems.length === 0}
                   >
-                    Vazhdo në Arkë
+                    Proceed to Checkout
                   </button>
                 </div>
               </div>
@@ -323,8 +328,7 @@ export default function ProductList() {
       {query && (
         <div className="search-results-heading">
           <h2 className="search-results-title">
-            Rezultatet e kërkimit për:{" "}
-            <span className="search-query">{query}</span>
+            Search results for: <span className="search-query">{query}</span>
           </h2>
         </div>
       )}
@@ -350,7 +354,7 @@ export default function ProductList() {
         {/* Sort options */}
         <div className="sort-container">
           <label htmlFor="sort-select" className="sort-label">
-            Rendit sipas:
+            Sort by:
           </label>
           <select
             id="sort-select"
@@ -358,10 +362,10 @@ export default function ProductList() {
             onChange={(e) => setSortOption(e.target.value)}
             className="sort-select"
           >
-            <option value="default">Parazgjedhur</option>
-            <option value="price-low">Çmimi: I ulët - I lartë</option>
-            <option value="price-high">Çmimi: I lartë - I ulët</option>
-            <option value="rating">Vlerësimi</option>
+            <option value="default">Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Rating</option>
           </select>
         </div>
       </div>
@@ -391,13 +395,13 @@ export default function ProductList() {
             <div className="no-products-emoji" aria-hidden="true">
               😕
             </div>
-            <h3 className="no-products-title">Nuk u gjet asnjë produkt</h3>
+            <h3 className="no-products-title">No products found</h3>
             <p className="no-products-message">
-              Nuk u gjet asnjë produkt për: <strong>{query}</strong>
+              No products found for: <strong>{query}</strong>
               {selectedFilter !== "all" && (
                 <>
                   {" "}
-                  me filtrin: <strong>{selectedFilter}</strong>
+                  with filter: <strong>{selectedFilter}</strong>
                 </>
               )}
             </p>
@@ -408,7 +412,7 @@ export default function ProductList() {
               }}
               className="reset-filters-button"
             >
-              Reset Filtrave
+              Reset Filters
             </button>
           </div>
         )}
@@ -417,303 +421,9 @@ export default function ProductList() {
       {/* Product count */}
       {filteredProducts.length > 0 && (
         <div className="product-count">
-          Duke shfaqur {filteredProducts.length} produkte nga{" "}
-          {productdata.length}
+          Showing {filteredProducts.length} products out of {productdata.length}
         </div>
       )}
     </div>
   );
 }
-
-// import { useLocation, Link } from "react-router-dom";
-// import { useState, useEffect } from "react";
-// import ProductCard from "./ProductCard";
-// import "./ProductList.css";
-// import { useAppContext } from "../../context/AppContext";
-
-// type CartItem = {
-//   id: string;
-//   title: string;
-//   price: string;
-//   quantity: number;
-//   img: string;
-// };
-
-// type ProductData = {
-//   id: string;
-//   img: string;
-//   title: string;
-//   description: string;
-//   price: string;
-//   tags: string[];
-//   filterTags: string[];
-//   rating?: number;
-//   discount?: string;
-//   isNew?: boolean;
-// };
-
-// const filters = [
-//   { key: "all", label: "Të gjitha" },
-//   { key: "hidratim", label: "Hidratim" },
-//   { key: "pastrim", label: "Pastrim" },
-//   { key: "natyral", label: "Natyral" },
-//   { key: "discount", label: "Oferta" },
-//   { key: "parfum", label: "Parfume" },
-// ];
-
-// export default function ProductList() {
-//   const { productdata } = useAppContext();
-//   const location = useLocation();
-//   const searchParams = new URLSearchParams(location.search);
-//   const query = searchParams.get("q")?.toLowerCase() || "";
-
-//   const [selectedFilter, setSelectedFilter] = useState("all");
-//   const [sortOption, setSortOption] = useState("default");
-//   const [filteredProducts, setFilteredProducts] = useState<ProductData[]>([]);
-
-//   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-//   const [isCartOpen, setIsCartOpen] = useState(false);
-//   const [cartAnimation, setCartAnimation] = useState("");
-
-//   const addToCart = (product: ProductData) => {
-//     setCartItems((prev) => {
-//       const exists = prev.find((item) => item.id === product.id);
-//       if (exists) {
-//         return prev.map((item) =>
-//           item.id === product.id
-//             ? { ...item, quantity: item.quantity + 1 }
-//             : item
-//         );
-//       } else {
-//         return [
-//           ...prev,
-//           {
-//             id: product.id,
-//             title: product.title,
-//             price: product.price,
-//             img: product.img,
-//             quantity: 1,
-//           },
-//         ];
-//       }
-//     });
-//     setIsCartOpen(true);
-//     setCartAnimation("pulse");
-//     setTimeout(() => setCartAnimation(""), 500);
-//   };
-
-//   const updateQuantity = (id: string, quantity: number) => {
-//     if (quantity <= 0) {
-//       setCartItems((prev) => prev.filter((item) => item.id !== id));
-//     } else {
-//       setCartItems((prev) =>
-//         prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-//       );
-//     }
-//   };
-
-//   const clearCart = () => setCartItems([]);
-
-//   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-//   const totalPrice = cartItems.reduce((sum, item) => {
-//     const price = parseFloat(item.price.replace(/[^0-9.]/g, ""));
-//     return sum + price * item.quantity;
-//   }, 0);
-
-//   useEffect(() => {
-//     let result = [...productdata];
-
-//     if (query) {
-//       result = result.filter(
-//         (p) =>
-//           p.title.toLowerCase().includes(query) ||
-//           p.description.toLowerCase().includes(query) ||
-//           p.tags.some((tag) => tag.toLowerCase().includes(query))
-//       );
-//     }
-
-//     if (selectedFilter !== "all") {
-//       if (selectedFilter === "discount") {
-//         result = result.filter((p) => p.discount);
-//       } else {
-//         result = result.filter(
-//           (p) =>
-//             p.filterTags &&
-//             p.filterTags.some((tag) =>
-//               tag.toLowerCase().includes(selectedFilter)
-//             )
-//         );
-//       }
-//     }
-
-//     if (sortOption === "price-low") {
-//       result.sort(
-//         (a, b) =>
-//           parseFloat(a.price.replace(/[^0-9.]/g, "")) -
-//           parseFloat(b.price.replace(/[^0-9.]/g, ""))
-//       );
-//     } else if (sortOption === "price-high") {
-//       result.sort(
-//         (a, b) =>
-//           parseFloat(b.price.replace(/[^0-9.]/g, "")) -
-//           parseFloat(a.price.replace(/[^0-9.]/g, ""))
-//       );
-//     } else if (sortOption === "rating") {
-//       result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-//     }
-
-//     setFilteredProducts(result);
-//   }, [query, selectedFilter, sortOption, productdata]);
-
-//   return (
-//     <div className="product-list-container">
-//       {/* Cart Header */}
-//       <div className="cart-header">
-//         <button
-//           onClick={() => setIsCartOpen(!isCartOpen)}
-//           className={`cart-button ${cartAnimation || "normal"}`}
-//         >
-//           🛒{" "}
-//           {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
-//         </button>
-//       </div>
-
-//       {/* Cart Drawer */}
-//       {isCartOpen && (
-//         <>
-//           <div className="cart-drawer">
-//             <div className="cart-header-section">
-//               <h2>Shporta ({totalItems})</h2>
-//               <button
-//                 onClick={() => setIsCartOpen(false)}
-//                 className="close-cart-button"
-//               >
-//                 ×
-//               </button>
-//             </div>
-//             <div className="cart-items-container">
-//               {cartItems.length === 0 ? (
-//                 <p>Shporta juaj është bosh</p>
-//               ) : (
-//                 cartItems.map((item) => (
-//                   <div key={item.id} className="cart-item">
-//                     <img
-//                       src={item.img}
-//                       alt={item.title}
-//                       className="cart-item-image"
-//                     />
-//                     <div className="cart-item-details">
-//                       <h4>{item.title}</h4>
-//                       <div>{item.price}</div>
-//                     </div>
-//                     <div className="cart-item-actions">
-//                       <button
-//                         onClick={() =>
-//                           updateQuantity(item.id, item.quantity - 1)
-//                         }
-//                       >
-//                         -
-//                       </button>
-//                       <span>{item.quantity}</span>
-//                       <button
-//                         onClick={() =>
-//                           updateQuantity(item.id, item.quantity + 1)
-//                         }
-//                       >
-//                         +
-//                       </button>
-//                       <button onClick={() => updateQuantity(item.id, 0)}>
-//                         ×
-//                       </button>
-//                     </div>
-//                   </div>
-//                 ))
-//               )}
-//             </div>
-//             {cartItems.length > 0 && (
-//               <div className="cart-footer">
-//                 <div className="cart-total">
-//                   <span>Totali:</span> <strong>€{totalPrice.toFixed(2)}</strong>
-//                 </div>
-//                 <div className="cart-actions">
-//                   <button onClick={clearCart} className="clear-cart-button">
-//                     Pastro
-//                   </button>
-//                   <Link to="/checkout" className="checkout-button">
-//                     Vazhdo në Arkë
-//                   </Link>
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-//           <div className="cart-overlay" onClick={() => setIsCartOpen(false)} />
-//         </>
-//       )}
-
-//       {/* Filters */}
-//       <div className="filter-sort-container">
-//         <div className="filter-buttons">
-//           {filters.map((filter) => (
-//             <button
-//               key={filter.key}
-//               onClick={() => setSelectedFilter(filter.key)}
-//               className={`filter-button ${
-//                 selectedFilter === filter.key ? "active" : ""
-//               }`}
-//             >
-//               {filter.label}
-//             </button>
-//           ))}
-//         </div>
-//         <div className="sort-container">
-//           <label>Rendit sipas:</label>
-//           <select
-//             value={sortOption}
-//             onChange={(e) => setSortOption(e.target.value)}
-//           >
-//             <option value="default">Parazgjedhur</option>
-//             <option value="price-low">Çmimi: I ulët - I lartë</option>
-//             <option value="price-high">Çmimi: I lartë - I ulët</option>
-//             <option value="rating">Vlerësimi</option>
-//           </select>
-//         </div>
-//       </div>
-
-//       {/* Product Grid */}
-//       <div className="product-grid">
-//         {filteredProducts.length > 0 ? (
-//           filteredProducts.map((product) => (
-//             <ProductCard
-//               key={product.id}
-//               {...product}
-//               onAddToCart={() => addToCart(product)}
-//             />
-//           ))
-//         ) : (
-//           <div className="no-products-found">
-//             <p>
-//               😕 Nuk u gjet asnjë produkt për:{" "}
-//               <strong>{query || selectedFilter}</strong>
-//             </p>
-//             <button
-//               onClick={() => {
-//                 setSelectedFilter("all");
-//                 setSortOption("default");
-//               }}
-//             >
-//               Reset Filters
-//             </button>
-//           </div>
-//         )}
-//       </div>
-
-//       {/* Product Count */}
-//       {filteredProducts.length > 0 && (
-//         <div className="product-count">
-//           Duke shfaqur {filteredProducts.length} produkte nga{" "}
-//           {productdata.length}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }

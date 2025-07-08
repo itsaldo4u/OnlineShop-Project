@@ -12,6 +12,7 @@ const ProductTable = () => {
   );
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
+  // Confirm deletion of product
   const confirmDelete = async () => {
     if (productToDelete) {
       await deleteProduct(productToDelete);
@@ -19,20 +20,24 @@ const ProductTable = () => {
     }
   };
 
+  // Open form for adding new product
   const openAddForm = () => {
     setEditingProduct(null);
     setShowForm(true);
   };
 
+  // Open form for editing existing product
   const openEditForm = (product: ProductData) => {
     setEditingProduct(product);
     setShowForm(true);
   };
 
+  // Save handler: add or update product
   const handleSave = async (product: ProductData) => {
     editingProduct ? await updateProduct(product) : await addProduct(product);
   };
 
+  // Style for icon buttons (edit/delete)
   const iconBtnStyle = (color: string) => ({
     width: "30px",
     height: "30px",
@@ -43,6 +48,7 @@ const ProductTable = () => {
     backgroundColor: "transparent",
   });
 
+  // Render tags as badges with optional color
   const renderTags = (tags: string[], color = "secondary") =>
     tags.map((tag, i) => (
       <span
@@ -58,6 +64,7 @@ const ProductTable = () => {
       </span>
     ));
 
+  // Image scale effect on hover
   const scaleImg = (e: any, scale: number) => {
     e.target.style.transform = `scale(${scale})`;
   };
@@ -95,7 +102,7 @@ const ProductTable = () => {
             textAlign: "center",
           }}
         >
-          Menaxhimi i Produkteve
+          Product Management
         </h4>
 
         <button
@@ -124,7 +131,7 @@ const ProductTable = () => {
               "0 8px 16px rgba(102, 126, 234, 0.3)";
           }}
         >
-          + Shto Produkt
+          + Add Product
         </button>
 
         <div
@@ -177,7 +184,7 @@ const ProductTable = () => {
                     minWidth: "60px",
                   }}
                 >
-                  Foto
+                  Image
                 </th>
                 <th
                   style={{
@@ -186,7 +193,7 @@ const ProductTable = () => {
                     minWidth: "120px",
                   }}
                 >
-                  Titulli
+                  Title
                 </th>
                 <th
                   style={{
@@ -196,7 +203,7 @@ const ProductTable = () => {
                     fontSize: "0.8rem",
                   }}
                 >
-                  Përshkrimi
+                  Description
                 </th>
                 <th
                   style={{
@@ -205,7 +212,7 @@ const ProductTable = () => {
                     minWidth: "80px",
                   }}
                 >
-                  Çmimi
+                  Price
                 </th>
                 <th
                   style={{
@@ -214,7 +221,7 @@ const ProductTable = () => {
                     minWidth: "100px",
                   }}
                 >
-                  Etiketa
+                  Tags
                 </th>
                 <th
                   style={{
@@ -232,7 +239,7 @@ const ProductTable = () => {
                     minWidth: "80px",
                   }}
                 >
-                  Vlerësimi
+                  Rating
                 </th>
                 <th
                   style={{
@@ -250,7 +257,7 @@ const ProductTable = () => {
                     minWidth: "100px",
                   }}
                 >
-                  Produkt i Ri?
+                  New Product?
                 </th>
                 <th
                   style={{
@@ -259,7 +266,7 @@ const ProductTable = () => {
                     minWidth: "120px",
                   }}
                 >
-                  Veprime
+                  Actions
                 </th>
               </tr>
             </thead>
@@ -346,7 +353,7 @@ const ProductTable = () => {
                           borderRadius: "12px",
                         }}
                       >
-                        E re
+                        New
                       </span>
                     )}
                   </td>
@@ -463,7 +470,7 @@ const ProductTable = () => {
                         fontWeight: "600",
                       }}
                     >
-                      {p.isNew ? "Po" : "Jo"}
+                      {p.isNew ? "Yes" : "No"}
                     </span>
                   </td>
                   <td style={{ padding: "12px 8px", verticalAlign: "middle" }}>
@@ -490,7 +497,7 @@ const ProductTable = () => {
                           e.currentTarget.style.transform = "translateY(0)";
                           e.currentTarget.style.boxShadow = "none";
                         }}
-                        title="Edito"
+                        title="Edit"
                       >
                         <Edit size={14} />
                       </button>
@@ -516,7 +523,7 @@ const ProductTable = () => {
                           e.currentTarget.style.transform = "translateY(0)";
                           e.currentTarget.style.boxShadow = "none";
                         }}
-                        title="Fshi"
+                        title="Delete"
                       >
                         <Trash2 size={14} />
                       </button>
@@ -529,6 +536,7 @@ const ProductTable = () => {
         </div>
       </div>
 
+      {/* Product form modal */}
       {showForm && (
         <ProductForm
           product={editingProduct}
@@ -537,6 +545,7 @@ const ProductTable = () => {
         />
       )}
 
+      {/* Delete confirmation modal */}
       {productToDelete && (
         <div
           style={{
@@ -573,7 +582,7 @@ const ProductTable = () => {
                 lineHeight: "1.5",
               }}
             >
-              A jeni i sigurt që doni ta fshini këtë produkt?
+              Are you sure you want to delete this product?
             </p>
             <div
               style={{
@@ -603,7 +612,7 @@ const ProductTable = () => {
                   e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                Anulo
+                Cancel
               </button>
               <button
                 onClick={confirmDelete}
@@ -630,7 +639,7 @@ const ProductTable = () => {
                     "0 4px 8px rgba(238, 90, 36, 0.3)";
                 }}
               >
-                Fshi
+                Delete
               </button>
             </div>
           </div>
