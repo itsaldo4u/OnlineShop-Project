@@ -7,7 +7,7 @@ import { useAppContext } from "../../context/AppContext";
 type CartItem = {
   id: string;
   title: string;
-  price: string;
+  price: number;
   quantity: number;
   img: string;
 };
@@ -64,6 +64,8 @@ export default function ProductList() {
 
   // Add to cart function
   const addToCart = (product: ProductData) => {
+    const productPrice = parseFloat(product.price.replace(/[^0-9.]/g, "")) || 0;
+
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
 
@@ -79,7 +81,7 @@ export default function ProductList() {
           {
             id: product.id,
             title: product.title,
-            price: product.price,
+            price: productPrice,
             img: product.img,
             quantity: 1,
           },
@@ -116,10 +118,10 @@ export default function ProductList() {
 
   // Calculate totals
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = cartItems.reduce((sum, item) => {
-    const itemPrice = parseFloat(item.price.replace(/[^0-9.]/g, ""));
-    return sum + itemPrice * item.quantity;
-  }, 0);
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   // Handle checkout navigation
   const handleCheckout = () => {
@@ -144,7 +146,7 @@ export default function ProductList() {
     setIsCartOpen(false);
   };
 
-  // Filter and sort products when query, filter or sort changes
+  // Filter and sort products
   useEffect(() => {
     let result = [...productdata];
 
@@ -173,14 +175,14 @@ export default function ProductList() {
 
     if (sortOption === "price-low") {
       result.sort((a, b) => {
-        const priceA = parseFloat(a.price.replace(/[^0-9.]/g, ""));
-        const priceB = parseFloat(b.price.replace(/[^0-9.]/g, ""));
+        const priceA = parseFloat(a.price.replace(/[^0-9.]/g, "")) || 0;
+        const priceB = parseFloat(b.price.replace(/[^0-9.]/g, "")) || 0;
         return priceA - priceB;
       });
     } else if (sortOption === "price-high") {
       result.sort((a, b) => {
-        const priceA = parseFloat(a.price.replace(/[^0-9.]/g, ""));
-        const priceB = parseFloat(b.price.replace(/[^0-9.]/g, ""));
+        const priceA = parseFloat(a.price.replace(/[^0-9.]/g, "")) || 0;
+        const priceB = parseFloat(b.price.replace(/[^0-9.]/g, "")) || 0;
         return priceB - priceA;
       });
     } else if (sortOption === "rating") {
